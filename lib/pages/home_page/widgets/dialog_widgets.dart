@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:intex_commerce/core/app_services/log_service.dart';
 import 'package:intex_commerce/core/app_utils/app_spaces.dart';
 import 'package:intex_commerce/pages/home_page/widgets/icon_widgets.dart';
 import 'package:lottie/lottie.dart';
@@ -301,9 +302,7 @@ class SuccessDialog extends StatelessWidget {
         padding: AppSpaces.kTBPadding1725,
         child: Column(
           children: [
-            CloseIconButton(
-              onTap: Get.back,
-            ),
+            CloseIconButton(onTap: (){}),
             Lottie.asset(
               'assets/lottie/success.json',
               height: 182.h,
@@ -344,9 +343,7 @@ class FailDialog extends StatelessWidget {
         padding: AppSpaces.kTBPadding1725,
         child: Column(
           children: [
-            CloseIconButton(
-              onTap: Get.back,
-            ),
+            CloseIconButton(onTap: (){}),
             Lottie.asset(
               'assets/lottie/fail.json',
               height: 182.h,
@@ -383,12 +380,7 @@ class OutOfStockDialog extends StatelessWidget {
         padding: AppSpaces.kTBPadding1725,
         child: Column(
           children: [
-            CloseIconButton(
-              onTap: (){
-                Get.find<HomeController>().handleRefresh;
-                Get.back();
-              },
-            ),
+            CloseIconButton(onTap: (){}),
             Lottie.asset(
               'assets/lottie/no_product_left.json',
               height: 182.h,

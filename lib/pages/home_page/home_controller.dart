@@ -244,10 +244,10 @@ class HomeController extends GetxController {
 
   /// Network
   void consultationResponse({required String? response, required BuildContext context}) {
-    Get.back();
     if (response != null) {
       _isPostingConsultation = false;
       update();
+      Get.back();
       openDialog(
         context: context,
         child: const SuccessDialog(),
@@ -256,21 +256,23 @@ class HomeController extends GetxController {
     }
   }
   void orderResponse({required String? response, required BuildContext context}) {
+    Log.wtf(response ?? 'NO ORDER RESPONSE');
 
     if(response != null && response == 'not_available'){
-      Log.wtf('FAIL => ' + response ?? 'NO RESPONSE');
       _isPostingOrder = false;
       update();
+      Get.back();
       openDialog(
         context: context,
         child: const OutOfStockDialog(),
       );
       clearTextControllers();
+      handleRefresh();
     }
     else if (response != null && response != 'not_available') {
-      Log.wtf('SUCCESS => ' + response ?? 'NO RESPONSE');
       _isPostingOrder = false;
       update();
+      Get.back();
       openDialog(
         context: context,
         child: const SuccessDialog(),
@@ -292,10 +294,7 @@ class HomeController extends GetxController {
       if(hasInternet){
         await DioService().POST(
             api: Environment.envVariable('apiCreateConsultation'),
-            params: {
-              "name": name,
-              "phoneNumber": phone,
-            }).then((value) => {
+            params: {"name": name, "phoneNumber": phone}).then((value) => {
               consultationResponse(context: context, response: value),
         });
       }else{
@@ -312,7 +311,7 @@ class HomeController extends GetxController {
         context: context,
         builder: (context) => const WarningDialog(),
       );
-      Timer(const Duration(seconds: 2), () => Get.back());
+      Timer(const Duration(seconds: 3), () => Get.back());
     }
   }
 
@@ -351,7 +350,7 @@ class HomeController extends GetxController {
         context: context,
         builder: (context) => const WarningDialog(),
       );
-      Timer(const Duration(seconds: 2), () => Get.back());
+      Timer(const Duration(seconds: 3), () => Get.back());
     }
   }
 
