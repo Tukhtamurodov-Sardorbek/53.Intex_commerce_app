@@ -36,11 +36,11 @@ class DioService {
         return jsonEncode(response.data);
       }
       else if(api == Environment.envVariable('apiCreateOrder') && response.statusCode == 406){
-        return '${response.statusCode}';
+        return 'not_available';
       }
       return null;
     } on DioError catch (e) {
-      return jsonEncode(e.response!.data);
+      return e.response!.statusCode == 406 ? 'not_available' : jsonEncode(e.response!.data);
     }
   }
 

@@ -256,9 +256,9 @@ class HomeController extends GetxController {
     }
   }
   void orderResponse({required String? response, required BuildContext context}) {
-    Log.wtf(response ?? 'NO RESPONSE');
 
-    if(response == '406'){
+    if(response != null && response == 'not_available'){
+      Log.wtf('FAIL => ' + response ?? 'NO RESPONSE');
       _isPostingOrder = false;
       update();
       openDialog(
@@ -267,7 +267,8 @@ class HomeController extends GetxController {
       );
       clearTextControllers();
     }
-    else if (response != null) {
+    else if (response != null && response != 'not_available') {
+      Log.wtf('SUCCESS => ' + response ?? 'NO RESPONSE');
       _isPostingOrder = false;
       update();
       openDialog(
@@ -311,7 +312,7 @@ class HomeController extends GetxController {
         context: context,
         builder: (context) => const WarningDialog(),
       );
-      Timer(const Duration(seconds: 1), () => Get.back());
+      Timer(const Duration(seconds: 2), () => Get.back());
     }
   }
 
@@ -350,7 +351,7 @@ class HomeController extends GetxController {
         context: context,
         builder: (context) => const WarningDialog(),
       );
-      Timer(const Duration(seconds: 1), () => Get.back());
+      Timer(const Duration(seconds: 2), () => Get.back());
     }
   }
 

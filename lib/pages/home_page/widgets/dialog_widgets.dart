@@ -384,13 +384,15 @@ class OutOfStockDialog extends StatelessWidget {
         child: Column(
           children: [
             CloseIconButton(
-              onTap: Get.back,
+              onTap: (){
+                Get.find<HomeController>().handleRefresh;
+                Get.back();
+              },
             ),
             Lottie.asset(
               'assets/lottie/no_product_left.json',
               height: 182.h,
               width: 182.w,
-              repeat: false,
             ),
             AppSpaces.spaceVertical30,
             Text("error".tr, style: AppTextStyles.size40weight700),
@@ -425,7 +427,7 @@ class WarningDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Lottie.asset('assets/lottie/warning.json', fit: BoxFit.contain, height: 80.h, width: 80.w, repeat: false),
+            Lottie.asset('assets/lottie/warning.json', fit: BoxFit.contain, height: 80.h, width: 80.w),
             AppSpaces.spaceVertical20,
             Text("warning".tr, style: AppTextStyles.size14weight400,textAlign: TextAlign.center,),
           ],
