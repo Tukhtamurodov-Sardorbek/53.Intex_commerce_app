@@ -32,7 +32,7 @@ class SplashController extends GetxController {
   }
 
   Future<String> getCategoryList() async {
-    await DioService().get(
+    await DioService().GET(
       api: Environment.envVariable('apiGetCategory'),
       params: DioService().paramsEmpty(),
     ).then((value) => {parseCategory(value)});
@@ -46,7 +46,7 @@ class SplashController extends GetxController {
   }
 
   Future<String> getProductList() async {
-    await DioService().get(
+    await DioService().GET(
       api: Environment.envVariable('apiGetProduct'),
       params: DioService().paramsEmpty(),
     ).then((value) => {parseProduct(value)});

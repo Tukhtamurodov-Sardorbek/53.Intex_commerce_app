@@ -121,12 +121,7 @@ class OrderDialog extends StatelessWidget {
                   ),
                 ),
                 AppSpaces.spaceVertical30,
-                Center(
-                  child: Text(
-                    price,
-                    style: AppTextStyles.size20weight700,
-                  ),
-                ),
+                Center(child: Text(price, style: AppTextStyles.size20weight700)),
                 Padding(
                   padding: AppSpaces.kLTRBPadding32202713,
                   child: TextFieldString(
@@ -354,6 +349,45 @@ class FailDialog extends StatelessWidget {
             ),
             Lottie.asset(
               'assets/lottie/fail.json',
+              height: 182.h,
+              width: 182.w,
+              repeat: false,
+            ),
+            AppSpaces.spaceVertical30,
+            Text("error".tr, style: AppTextStyles.size40weight700),
+            AppSpaces.spaceVertical10,
+            Text(
+              "smth_went_wrong".tr,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.size18weight400,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class OutOfStockDialog extends StatelessWidget {
+  const OutOfStockDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: AppColors.dialogBackground,
+      insetAnimationCurve: Curves.bounceIn,
+      shape: RoundedRectangleBorder(borderRadius: AppBorders.circular35),
+      child: Container(
+        height: 400.h,
+        width: 331.w,
+        padding: AppSpaces.kTBPadding1725,
+        child: Column(
+          children: [
+            CloseIconButton(
+              onTap: Get.back,
+            ),
+            Lottie.asset(
+              'assets/lottie/no_product_left.json',
               height: 182.h,
               width: 182.w,
               repeat: false,

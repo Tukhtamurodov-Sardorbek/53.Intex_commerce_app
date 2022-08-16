@@ -37,7 +37,7 @@ class NoInternetConnectionController extends GetxController {
   }
 
   Future<String> getCategoryList() async {
-    await DioService().get(
+    await DioService().GET(
         api: Environment.envVariable('apiGetCategory'),
         params: DioService().paramsEmpty()).then((value) => {
           parseCategory(value),
@@ -53,7 +53,7 @@ class NoInternetConnectionController extends GetxController {
   }
 
   Future<String> getProductModel() async {
-    await DioService().get(
+    await DioService().GET(
         api: Environment.envVariable('apiGetProduct'),
         params: DioService().paramsEmpty()).then(
             (value) => {parseProduct(value)},

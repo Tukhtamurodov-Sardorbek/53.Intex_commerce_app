@@ -248,22 +248,33 @@ class HomeController extends GetxController {
     if (response != null) {
       _isPostingConsultation = false;
       update();
-      clearConsultTextControllers();
       openDialog(
         context: context,
         child: const SuccessDialog(),
       );
+      clearConsultTextControllers();
     }
   }
   void orderResponse({required String? response, required BuildContext context}) {
-    if (response != null) {
+    Log.wtf(response ?? 'NO RESPONSE');
+
+    if(response == '406'){
       _isPostingOrder = false;
       update();
+      openDialog(
+        context: context,
+        child: const OutOfStockDialog(),
+      );
       clearTextControllers();
+    }
+    else if (response != null) {
+      _isPostingOrder = false;
+      update();
       openDialog(
         context: context,
         child: const SuccessDialog(),
       );
+      clearTextControllers();
     }
   }
 
@@ -278,7 +289,7 @@ class HomeController extends GetxController {
       update();
 
       if(hasInternet){
-        await DioService().post(
+        await DioService().POST(
             api: Environment.envVariable('apiCreateConsultation'),
             params: {
               "name": name,
@@ -315,7 +326,7 @@ class HomeController extends GetxController {
       _isPostingOrder = true;
       update();
       if(hasInternet){
-        await DioService().post(
+        await DioService().POST(
             api: Environment.envVariable('apiCreateOrder'),
             params: {
               "productId": productId,
