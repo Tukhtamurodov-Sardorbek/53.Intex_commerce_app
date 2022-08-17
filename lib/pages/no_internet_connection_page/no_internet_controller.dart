@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:intex_commerce/data/api_client.dart';
+import 'package:intex_commerce/data/dio_client.dart';
 import 'package:intex_commerce/core/app_services/environment_service.dart';
 import 'package:intex_commerce/pages/splash_page/splash_controller.dart';
 import 'package:intex_commerce/routes/app_routes.dart';
