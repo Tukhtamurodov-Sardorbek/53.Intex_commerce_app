@@ -58,4 +58,7 @@ final Map<String, String> ru = {
   "error": "Ошибка",
   "smth_went_wrong": "Что-то пошло не так...",
   "warning": "Заполните поле полностью",
+
+  "out_of_stock":"Нет в продаже",
+  "not_available":"Продукт в настоящее время недоступен",
 };
