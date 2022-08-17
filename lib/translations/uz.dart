@@ -55,4 +55,7 @@ final Map<String, String> uz = {
   "error": "Xatolik",
   "smth_went_wrong": "Nimadir noto'g'ri bajarildi...",
   "warning":"To`liq to`ldiring",
+
+  "out_of_stock":"Sotuvda yo'q",
+  "not_available":"Mahsulot hozircha mavjud emas",
 };
