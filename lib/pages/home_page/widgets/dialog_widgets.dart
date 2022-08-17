@@ -387,10 +387,10 @@ class OutOfStockDialog extends StatelessWidget {
               width: 182.w,
             ),
             AppSpaces.spaceVertical30,
-            Text("error".tr, style: AppTextStyles.size40weight700),
+            Text("out_of_stock".tr, style: AppTextStyles.size23weight700Black),
             AppSpaces.spaceVertical10,
             Text(
-              "smth_went_wrong".tr,
+              "not_available".tr,
               textAlign: TextAlign.center,
               style: AppTextStyles.size18weight400,
             ),
