@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intex_commerce/core/app_utils/app_colors.dart';
-import 'package:intex_commerce/data/api_client.dart';
+import 'package:intex_commerce/data/dio_client.dart';
 import 'package:intex_commerce/core/app_services/database_service.dart';
 import 'package:intex_commerce/core/app_services/environment_service.dart';
 import 'package:intex_commerce/core/app_services/log_service.dart';
@@ -37,6 +37,7 @@ class HomeController extends GetxController {
   List<Category> _categories = [];
   bool _displayShadow = false;
   String _language = 'ru';
+  String _dioException = '';
   bool _isPostingConsultation = false;
   bool _isPostingOrder = false;
 
@@ -52,6 +53,7 @@ class HomeController extends GetxController {
   List<Map<int, List<Product>>> get products => _products;
   List<Category> get categories => _categories;
   String get language => _language;
+  String get dioException => _dioException;
   List<String> get textPools => _textBasseyn;
 
   bool get displayShadow => _displayShadow;
@@ -67,6 +69,12 @@ class HomeController extends GetxController {
   set isPostingOrder(bool value) {
     if (_isPostingOrder != value) {
       _isPostingOrder = value;
+      update();
+    }
+  }
+  set dioException(String msg){
+    if(_dioException != msg){
+      _dioException = msg;
       update();
     }
   }
@@ -294,7 +302,7 @@ class HomeController extends GetxController {
       if(hasInternet){
         await DioService().POST(
             api: Environment.envVariable('apiCreateConsultation'),
-            params: {"name": name, "phoneNumber": phone}).then((value) => {
+            body: {"name": name, "phoneNumber": phone}).then((value) => {
               consultationResponse(context: context, response: value),
         });
       }else{
@@ -314,7 +322,6 @@ class HomeController extends GetxController {
       Timer(const Duration(seconds: 3), () => Get.back());
     }
   }
-
   Future<void> postOrder(BuildContext context, int productId) async {
     String name = nameController.text.trim().toString();
     String phone = phoneController.text.trim().toString();
@@ -328,7 +335,7 @@ class HomeController extends GetxController {
       if(hasInternet){
         await DioService().POST(
             api: Environment.envVariable('apiCreateOrder'),
-            params: {
+            body: {
               "productId": productId,
               "name": name,
               "phoneNumber": phone,
