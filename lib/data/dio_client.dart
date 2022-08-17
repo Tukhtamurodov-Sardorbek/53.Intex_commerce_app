@@ -1,25 +1,45 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:intex_commerce/core/app_services/environment_service.dart';
-import 'package:intex_commerce/data/base_options.dart';
+import 'package:intex_commerce/data/exceptions.dart';
 import '../core/app_services/log_service.dart';
 
-
-
 class DioService {
-  Dio dio = Dio(BaseOption.baseDioOptions());
+  /// Header
+  static Map<String, String> getHeaders() {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Charset': 'utf-8'
+    };
+    return headers;
+  }
 
+  /// Options
+  static var options = BaseOptions(
+    baseUrl: Environment.baseURL,
+    headers: getHeaders(),
+    connectTimeout: 5000,
+    receiveTimeout: 3000,
+  );
+
+  /// Dio
+  static final Dio dio = Dio(options);
+
+  /// Requests
   Future<String?> GET({required String api, required Map<String, dynamic> params}) async {
     try {
       Response response = await dio.get(api, queryParameters: params);
       if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonEncode(response.data);
       }
-      return null;
     } on DioError catch (e) {
-      return jsonEncode(e.response?.data);
+      if(e.type == DioErrorType.connectTimeout){
+        throw Exception("Connection  Timeout Exception");
+      }
+      DioExceptions.fromDioError(e);
     }
+    return null;
   }
 
   Future<String?> getFile({required String api}) async {
@@ -28,21 +48,36 @@ class DioService {
     return null;
   }
 
-  Future<String?> POST({required String api, required Map<String, dynamic> params}) async {
+  Future<String?> POST({required String api, required Map<String, dynamic> body}) async {
     try {
-      Response response = await dio.post(api, data: params);
+      Response response = await dio.post(api, data: body);
       Log.i('STATUS => ${response.statusCode}');
       if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonEncode(response.data);
       }
-      else if(api == Environment.envVariable('apiCreateOrder') && response.statusCode == 406){
-        return 'not_available';
-      }
       return null;
     } on DioError catch (e) {
+      final error = DioExceptions.fromDioError(e);
+      Log.e(error.controller.dioException);
       return e.response!.statusCode == 406 ? 'not_available' : jsonEncode(e.response!.data);
     }
   }
+
+  // Future<String?> POST({required String api, required Map<String, dynamic> params}) async {
+  //   try {
+  //     Response response = await dio.post(api, data: params);
+  //     Log.i('STATUS => ${response.statusCode}');
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       return jsonEncode(response.data);
+  //     }
+  //     else if(api == Environment.envVariable('apiCreateOrder') && response.statusCode == 406){
+  //       return 'not_available';
+  //     }
+  //     return null;
+  //   } on DioError catch (e) {
+  //     return e.response!.statusCode == 406 ? 'not_available' : jsonEncode(e.response!.data);
+  //   }
+  // }
 
   Future<String?> postFile({required String api, required File file}) async {
     FormData formData = FormData.fromMap(
@@ -64,10 +99,9 @@ class DioService {
     return null;
   }
 
-  Future<String?> PUT(
-      {required String api, required Map<String, dynamic> params}) async {
+  Future<String?> PUT({required String api, required Map<String, dynamic> body}) async {
     try {
-      Response response = await dio.put(api, data: jsonEncode(params));
+      Response response = await dio.put(api, data: jsonEncode(body));
       if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonEncode(response.data);
       }
@@ -78,8 +112,7 @@ class DioService {
     return null;
   }
 
-  Future<String?> PATCH(
-      {required String api, required Map<String, dynamic> params}) async {
+  Future<String?> PATCH({required String api, required Map<String, dynamic> params}) async {
     Response response = await dio.patch(api, queryParameters: params);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return jsonEncode(response.data);
@@ -87,8 +120,7 @@ class DioService {
     return null;
   }
 
-  Future<String?> DELETE(
-      {required String api, Map<String, dynamic>? params}) async {
+  Future<String?> DELETE({required String api, Map<String, dynamic>? params}) async {
     try {
       if (params != null) {
         Response response = await dio.delete(api, data: params);
@@ -119,7 +151,7 @@ class DioService {
     }
   }
 
-  // Params
+  /// Parameters
   Map<String, String> paramsEmpty() {
     Map<String, String> params = {};
     return params;
