@@ -159,7 +159,13 @@ class AppTextStyles {
       color: AppColors.greyTextField
   );
 
-
+  // * Used for: dialog
+  static final size40weight700 = TextStyle(
+      fontSize: 40.sp,
+      fontWeight: FontWeight.w700,
+      fontFamily: "Trebuchet MS",
+      color: AppColors.black
+  );
 
 
 
@@ -177,12 +183,7 @@ class AppTextStyles {
 
 
   //////////////////////////////////////////////
-  static final size40weight700 = TextStyle(
-      fontSize: 40.sp,
-      fontWeight: FontWeight.w700,
-      fontFamily: "Trebuchet MS",
-      color: AppColors.black
-  );
+
 
   static final size20weight700White = TextStyle(
     fontSize: 20.sp,
