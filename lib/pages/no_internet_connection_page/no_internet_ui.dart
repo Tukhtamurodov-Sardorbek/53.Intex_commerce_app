@@ -60,9 +60,9 @@ class NoInternetConnectionPage extends GetView<NoInternetConnectionController> {
                   padding: AppSpaces.kAllPadding17,
                   child: MaterialButton(
                     height: 50.h,
+                    minWidth: double.infinity,
                     color: AppColors.main,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: AppBorders.circular10),
+                    shape: RoundedRectangleBorder(borderRadius: AppBorders.circular10),
                     onPressed: controller.onPressed,
                     child: controller.isLoading
                         ? Theme(
