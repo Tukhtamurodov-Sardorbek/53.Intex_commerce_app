@@ -34,10 +34,7 @@ class DioService {
         return jsonEncode(response.data);
       }
     } on DioError catch (e) {
-      if(e.type == DioErrorType.connectTimeout){
-        throw Exception("Connection  Timeout Exception");
-      }
-      DioExceptions.fromDioError(e);
+      Log.e(e.toString());
     }
     return null;
   }
@@ -55,12 +52,8 @@ class DioService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonEncode(response.data);
       }
-      return null;
-    } on DioError catch (e) {
-      final error = DioExceptions.fromDioError(e);
-      Log.e(error.controller.dioException);
-      return e.response!.statusCode == 406 ? 'not_available' : jsonEncode(e.response!.data);
-    }
+    } on DioError catch (e) {}
+    return null;
   }
 
   // Future<String?> POST({required String api, required Map<String, dynamic> params}) async {
