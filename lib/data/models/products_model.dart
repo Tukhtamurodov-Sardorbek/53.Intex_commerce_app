@@ -45,7 +45,7 @@ class Product {
    required this.statusUz,
   });
 
-  int id;
+  String id;
   int categoryId;
   String categoryNameUz;
   String categoryNameRu;
