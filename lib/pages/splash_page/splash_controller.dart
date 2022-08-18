@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:intex_commerce/data/dio_client.dart';
 import 'package:intex_commerce/core/app_services/database_service.dart';
@@ -19,14 +20,17 @@ class SplashController extends GetxController {
   Future<void> fetchData(bool isRefresh) async {
     bool hasInternet = await InternetConnectionChecker().hasConnection;
     if (hasInternet) {
-      Log.i('Fetch');
-      await Future.wait([getCategoryList(), getProductList()]).then((value) => Get.offNamed(AppRoutes.home));
+      await Future.wait([getCategoryList(), getProductList()]).then((value){
+        if (StorageService.to.checkData(StorageKeys.categoryList) && StorageService.to.checkData(StorageKeys.productList)) {
+          Get.offNamed(AppRoutes.home);
+        } else {
+          Get.offNamed(AppRoutes.noInternet);
+        }
+      });
     } else {
       if (StorageService.to.checkData(StorageKeys.categoryList) && StorageService.to.checkData(StorageKeys.productList)) {
-        Log.i('Read');
         Get.offNamed(AppRoutes.home);
       } else {
-        Log.i('No');
         Get.offNamed(AppRoutes.noInternet);
       }
     }
@@ -45,9 +49,6 @@ class SplashController extends GetxController {
       Log.i('PARSE CATEGORY LIST');
       CaterogyModel category = caterogyListModelFromJson(response);
       StorageService.to.setData(StorageKeys.categoryList, category.data);
-    } else{
-      Log.i('PARSE CATEGORY LIST');
-
     }
   }
 
@@ -58,7 +59,6 @@ class SplashController extends GetxController {
     ).then((value) => {parseProduct(value)});
     return '';
   }
-
   void parseProduct(String? response) {
     if (response != null) {
       ProductModel product = productModelFromJson(response);
