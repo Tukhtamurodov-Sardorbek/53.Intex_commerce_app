@@ -57,7 +57,7 @@ class ProductPreview extends StatelessWidget {
 class OrderDialog extends StatelessWidget {
   final String title;
   final String image;
-  final int id;
+  final String id;
   final String price;
 
   const OrderDialog({
