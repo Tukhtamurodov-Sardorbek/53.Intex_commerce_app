@@ -23,50 +23,47 @@ class NoInternetConnectionController extends GetxController {
 
   @override
   void onInit() {
-    InternetConnectionChecker().onStatusChange.listen(
-        // (status) {hasInternet = status == InternetConnectionStatus.connected;}
-        _updateConnectionStatus);
+    InternetConnectionChecker().onStatusChange.listen(_updateConnectionStatus);
     super.onInit();
   }
 
   Future<void> _updateConnectionStatus(InternetConnectionStatus status) async {
     if (status == InternetConnectionStatus.connected) {
-      await Future.wait([getCategoryList(), getProductModel()])
-          .then((value) => Get.offNamed(AppRoutes.home));
+      Get.find<SplashController>().fetchData(false);
     }
   }
 
-  Future<String> getCategoryList() async {
-    await DioService().GET(
-        api: Environment.envVariable('apiGetCategory'),
-        params: DioService().paramsEmpty()).then((value) => {
-          parseCategory(value),
-    });
-    return '';
-  }
-
-  void parseCategory(String? response) {
-    if (response != null) {
-      CaterogyModel caterogy = caterogyListModelFromJson(response);
-      StorageService.to.setData(StorageKeys.categoryList, caterogy.data);
-    }
-  }
-
-  Future<String> getProductModel() async {
-    await DioService().GET(
-        api: Environment.envVariable('apiGetProduct'),
-        params: DioService().paramsEmpty()).then(
-            (value) => {parseProduct(value)},
-    );
-    return '';
-  }
-
-  void parseProduct(String? response) {
-    if (response != null) {
-      ProductModel product = productModelFromJson(response);
-      StorageService.to.setData(StorageKeys.productList, product.data);
-    }
-  }
+  // Future<String> getCategoryList() async {
+  //   await DioService().GET(
+  //       api: Environment.envVariable('apiGetCategory'),
+  //       params: DioService().paramsEmpty()).then((value) => {
+  //         parseCategory(value),
+  //   });
+  //   return '';
+  // }
+  //
+  // void parseCategory(String? response) {
+  //   if (response != null) {
+  //     CaterogyModel caterogy = caterogyListModelFromJson(response);
+  //     StorageService.to.setData(StorageKeys.categoryList, caterogy.data);
+  //   }
+  // }
+  //
+  // Future<String> getProductModel() async {
+  //   await DioService().GET(
+  //       api: Environment.envVariable('apiGetProduct'),
+  //       params: DioService().paramsEmpty()).then(
+  //           (value) => {parseProduct(value)},
+  //   );
+  //   return '';
+  // }
+  //
+  // void parseProduct(String? response) {
+  //   if (response != null) {
+  //     ProductModel product = productModelFromJson(response);
+  //     StorageService.to.setData(StorageKeys.productList, product.data);
+  //   }
+  // }
 
   Future<void> onPressed() async {
     isLoading = true;
@@ -77,10 +74,7 @@ class NoInternetConnectionController extends GetxController {
     isLoading = false;
 
     if (hasInternet) {
-      Future.wait([
-        Get.find<SplashController>().getCategoryList(),
-        Get.find<SplashController>().getProductList(),
-      ]).then((value) => Get.offNamed(AppRoutes.home));
+      Get.find<SplashController>().fetchData(false);
     }
   }
 }
