@@ -234,8 +234,10 @@ class HomeController extends GetxController {
       _categories = StorageService.to.getData(StorageKeys.categoryList);
       productList = StorageService.to.getData(StorageKeys.productList);
     } else {
-      _categories = List<Category>.from(StorageService.to.getData(StorageKeys.categoryList).map((x) => Category.fromJson(x)));
-      productList = List<Product>.from(StorageService.to.getData(StorageKeys.productList).map((x) => Product.fromJson(x)));
+      if (StorageService.to.checkData(StorageKeys.categoryList) && StorageService.to.checkData(StorageKeys.productList)){
+        _categories = List<Category>.from(StorageService.to.getData(StorageKeys.categoryList).map((x) => Category.fromJson(x)));
+        productList = List<Product>.from(StorageService.to.getData(StorageKeys.productList).map((x) => Product.fromJson(x)));
+      }
     }
     _products.clear();
     update();
@@ -322,7 +324,7 @@ class HomeController extends GetxController {
       Timer(const Duration(seconds: 3), () => Get.back());
     }
   }
-  Future<void> postOrder(BuildContext context, int productId) async {
+  Future<void> postOrder(BuildContext context, String productId) async {
     String name = nameController.text.trim().toString();
     String phone = phoneController.text.trim().toString();
     String address = addressController.text.trim().toString();
