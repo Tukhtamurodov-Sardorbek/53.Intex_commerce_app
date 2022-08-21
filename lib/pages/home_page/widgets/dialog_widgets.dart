@@ -190,7 +190,9 @@ class OrderDialog extends StatelessWidget {
                   height: 36.h,
                   color: AppColors.yellow,
                   onPressed: () {
-                    controller.postOrder(context, id);
+                    if(controller.isPostingOrder == false){
+                      controller.postOrder(context, id);
+                    }
                   },
                   child: controller.isPostingOrder
                       ? const CupertinoActivityIndicator(color: AppColors.black)
@@ -276,7 +278,9 @@ class ConsultDialog extends StatelessWidget {
                         style: AppTextStyles.size20weight700Black,
                       ),
                 onPressed: () {
-                  controller.postConsultation(context);
+                  if(controller.isPostingConsultation == false) {
+                    controller.postConsultation(context);
+                  }
                 },
               ),
             ],
