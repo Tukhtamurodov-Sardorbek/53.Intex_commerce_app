@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:intex_commerce/data/dio_client.dart';
 import 'package:intex_commerce/core/app_services/database_service.dart';
@@ -6,7 +5,6 @@ import 'package:intex_commerce/core/app_services/environment_service.dart';
 import 'package:intex_commerce/core/app_services/log_service.dart';
 import 'package:intex_commerce/data/models/category_list_model.dart';
 import 'package:intex_commerce/data/models/products_model.dart';
-import 'package:intex_commerce/pages/home_page/home_controller.dart';
 import 'package:intex_commerce/routes/app_routes.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -44,6 +42,7 @@ class SplashController extends GetxController {
     ).then((value) => {parseCategory(value)});
     return '';
   }
+
   void parseCategory(String? response) {
     if (response != null) {
       Log.i('PARSE CATEGORY LIST');

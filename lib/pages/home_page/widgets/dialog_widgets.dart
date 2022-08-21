@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:intex_commerce/core/app_services/log_service.dart';
 import 'package:intex_commerce/core/app_utils/app_spaces.dart';
 import 'package:intex_commerce/pages/home_page/widgets/icon_widgets.dart';
 import 'package:lottie/lottie.dart';
@@ -57,7 +56,7 @@ class ProductPreview extends StatelessWidget {
 class OrderDialog extends StatelessWidget {
   final String title;
   final String image;
-  final String id;
+  final int id;
   final String price;
 
   const OrderDialog({
@@ -122,7 +121,7 @@ class OrderDialog extends StatelessWidget {
                   ),
                 ),
                 AppSpaces.spaceVertical30,
-                Center(child: Text(price, style: AppTextStyles.size20weight700)),
+                Center(child: Text(price, style: AppTextStyles.size20weight700Black)),
                 Padding(
                   padding: AppSpaces.kLTRBPadding32202713,
                   child: TextFieldString(
@@ -141,7 +140,7 @@ class OrderDialog extends StatelessWidget {
                     height: 44.h,
                     displayShadow: true,
                     isConsultDialog: false,
-                    phoneController: controller.phoneController,
+                    phoneController: controller.phoneController, hintText: 'your_number'.tr,
                   ),
                 ),
                 Padding(
@@ -236,7 +235,7 @@ class ConsultDialog extends StatelessWidget {
                 children: [
                   Text(
                     'get_consultation'.tr,
-                    style: AppTextStyles.size20weight700,
+                    style: AppTextStyles.size20weight700Black,
                   ),
                 ],
               ),
@@ -258,7 +257,8 @@ class ConsultDialog extends StatelessWidget {
                   height: 46.h,
                   displayShadow: true,
                   isConsultDialog: true,
-                  phoneController: controller.consultPhoneController,
+                  phoneController: controller.consultPhoneController, hintText: "your_number".tr,
+
                 ),
               ),
               AppSpaces.spaceVertical24,
@@ -312,14 +312,17 @@ class SuccessDialog extends StatelessWidget {
             AppSpaces.spaceVertical30,
             Text("thanks".tr, style: AppTextStyles.size40weight700),
             AppSpaces.spaceVertical10,
-            Wrap(
-              children: [
-                Text(
-                  "successfully_processed".tr,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.size18weight400,
-                ),
-              ],
+            Padding(
+              padding:EdgeInsets.only(left: 5.w,right: 5.w,top: 10.h),
+              child: Wrap(
+                children: [
+                  Text(
+                    "successfully_processed".tr,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.size18weight400,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

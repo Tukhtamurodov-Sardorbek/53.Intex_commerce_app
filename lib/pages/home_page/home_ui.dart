@@ -10,7 +10,6 @@ import 'package:intex_commerce/pages/home_page/widgets/footer_widget.dart';
 import 'package:intex_commerce/pages/home_page/widgets/sliver_widget.dart';
 import 'package:intex_commerce/pages/home_page/widgets/products_list.dart';
 import 'package:intex_commerce/pages/home_page/widgets/sliver_app_bar.dart';
-import 'package:lottie/lottie.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 

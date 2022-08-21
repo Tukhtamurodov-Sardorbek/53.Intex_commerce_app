@@ -12,7 +12,12 @@ class AppTextStyles {
     fontFamily: "Signika",
     color: AppColors.white,
   );
-
+  static final size20weight700 = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w600,
+    fontFamily: "Signika",
+    color: AppColors.white,
+  );
   // * Used for: labels
   static final size23weight700 = TextStyle(
     fontSize: 23.sp,
@@ -47,6 +52,12 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     fontFamily: "Trebuchet MS",
     color: AppColors.black,
+  );
+  static final size12weight700White = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w700,
+    fontFamily: "Trebuchet MS",
+    color: AppColors.white,
   );
 
   // * Used for: status card
@@ -85,17 +96,14 @@ class AppTextStyles {
       fontSize: 25.sp,
       fontWeight: FontWeight.w700,
       fontFamily: "Trebuchet MS",
-      color: AppColors.white
-  );
-
+      color: AppColors.white);
 
   // * Used for: list tile
   static final size20weight700Black = TextStyle(
       fontSize: 20.sp,
       fontWeight: FontWeight.w700,
-      fontFamily: "Trebuchet MS",
-      color: AppColors.black
-  );
+      fontFamily: "Spartan",
+      color: AppColors.black);
 
   static final size13weight400Black = TextStyle(
     fontSize: 13.sp,
@@ -103,7 +111,6 @@ class AppTextStyles {
     fontFamily: "Trebuchet MS",
     color: AppColors.black,
   );
-
 
   // * Used for: footer
   static final size12weight700 = TextStyle(
@@ -122,88 +129,71 @@ class AppTextStyles {
 
   // * Used for: footer button
   static final size15weight700 = TextStyle(
-      fontSize: 15.sp,
-      fontWeight: FontWeight.w700,
-      fontFamily: "Trebuchet MS",
-      color: AppColors.white,
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w700,
+    fontFamily: "Trebuchet MS",
+    color: AppColors.white,
+  );
+  static final size15Weight700 = TextStyle(
+    color: AppColors.phoneTextColor,
+    fontFamily: "Trebuchet MS",
+    fontWeight: FontWeight.w700,
+    fontSize: 15.sp,
   );
 
   static final size15weight700Black = TextStyle(
-      fontSize: 15.sp,
-      fontWeight: FontWeight.w700,
-      fontFamily: "Trebuchet MS",
-      color: AppColors.black,
-  );
-
-  // * Used for: product title in dialog
-  static final size15weight700Main = TextStyle(
-      fontSize: 15.sp,
-      fontWeight: FontWeight.w700,
-      fontFamily: "Trebuchet MS",
-      color: AppColors.main,
-  );
-
-  // * Used for: product price in alert dialog
-  static final size20weight700 = TextStyle(
-    fontSize: 20.sp,
+    fontSize: 15.sp,
     fontWeight: FontWeight.w700,
     fontFamily: "Trebuchet MS",
     color: AppColors.black,
   );
+
+  // * Used for: product title in dialog
+  static final size15weight700Main = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w700,
+    fontFamily: "Trebuchet MS",
+    color: AppColors.main,
+  );
+
+  // * Used for: product price in alert dialog
+  static final size20weight700Grey = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w700,
+    fontFamily: "Trebuchet MS",
+    color: AppColors.greyTextField,);
 
   // * Used for: dialog hint text
   static final size20weight400Grey = TextStyle(
       fontSize: 20.sp,
       fontWeight: FontWeight.w400,
       fontFamily: "Trebuchet MS",
-      color: AppColors.greyTextField
-  );
-
+      color: AppColors.greyTextField,);
   // * Used for: dialog
   static final size40weight700 = TextStyle(
       fontSize: 40.sp,
       fontWeight: FontWeight.w700,
       fontFamily: "Trebuchet MS",
-      color: AppColors.black
-  );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      color: AppColors.black);
 
   //////////////////////////////////////////////
 
-
   static final size20weight700White = TextStyle(
-    fontSize: 20.sp,
-    fontWeight: FontWeight.w700,
-    fontFamily: "Trebuchet MS",
-    color: AppColors.white
-  );
+      fontSize: 20.sp,
+      fontWeight: FontWeight.w700,
+      fontFamily: "Trebuchet MS",
+      color: AppColors.white);
 
   static final size21weight700White = TextStyle(
-    fontSize: 21.sp,
-    fontWeight: FontWeight.w700,
-    fontFamily: "Trebuchet MS",
-    color: AppColors.white
-  );
+      fontSize: 21.sp,
+      fontWeight: FontWeight.w700,
+      fontFamily: "Trebuchet MS",
+      color: AppColors.white);
   static final size21weight700 = TextStyle(
       fontSize: 21.sp,
       fontWeight: FontWeight.w700,
       fontFamily: "Trebuchet MS",
-      color: AppColors.lightBlue
-  );
+      color: AppColors.lightBlue);
 
   static final size23weight700Black = TextStyle(
     color: AppColors.black,
@@ -211,7 +201,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     fontFamily: "Trebuchet MS",
   );
-
 
   static final size17weight700 = TextStyle(
     color: AppColors.lightBlue,
@@ -226,5 +215,4 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     fontFamily: "Trebuchet MS",
   );
-
 }

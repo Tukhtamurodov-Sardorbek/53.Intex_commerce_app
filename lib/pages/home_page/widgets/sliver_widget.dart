@@ -137,7 +137,7 @@ class SliverWidget extends StatelessWidget {
                   style: AppTextStyles.size13weight400Black,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 25.0),
+                  padding: EdgeInsets.only(bottom: 25.0.h,top: 16.h),
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),

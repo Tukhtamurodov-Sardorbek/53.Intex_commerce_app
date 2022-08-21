@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:intex_commerce/core/app_services/environment_service.dart';
-import 'package:intex_commerce/data/exceptions.dart';
 import '../core/app_services/log_service.dart';
 
 class DioService {
@@ -52,7 +51,9 @@ class DioService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonEncode(response.data);
       }
-    } on DioError catch (e) {}
+    } on DioError catch (e) {
+      Log.e("Error   $e");
+    }
     return null;
   }
 

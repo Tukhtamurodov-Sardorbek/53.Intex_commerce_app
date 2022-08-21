@@ -5,6 +5,7 @@ class AppColors{
 
   static const white = Color(0xFFffffff);
   static const black = Color(0xFF000000);
+  static const phoneTextColor = Color(0xff919191);
   static const transparent = Colors.transparent;
   static const main = Color(0xff00979C);
   static const blue = Color(0xff007AFF);

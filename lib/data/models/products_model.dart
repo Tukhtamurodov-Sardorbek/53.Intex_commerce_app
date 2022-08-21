@@ -44,8 +44,10 @@ class Product {
    required this.statusRu,
    required this.statusUz,
   });
-
-  String id;
+/*
+net prodajidagi button ozgarishi kerak
+ */
+  int id;
   int categoryId;
   String categoryNameUz;
   String categoryNameRu;

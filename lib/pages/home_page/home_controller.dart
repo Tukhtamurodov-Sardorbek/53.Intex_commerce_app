@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +11,7 @@ import 'package:intex_commerce/core/app_services/environment_service.dart';
 import 'package:intex_commerce/core/app_services/log_service.dart';
 import 'package:intex_commerce/data/models/category_list_model.dart';
 import 'package:intex_commerce/data/models/products_model.dart';
+import 'package:intex_commerce/data/models/sites_model.dart';
 import 'package:intex_commerce/pages/home_page/home_ui.dart';
 import 'package:intex_commerce/pages/home_page/widgets/dialog_widgets.dart';
 import 'package:intex_commerce/pages/splash_page/splash_controller.dart';
@@ -40,6 +40,7 @@ class HomeController extends GetxController {
   String _dioException = '';
   bool _isPostingConsultation = false;
   bool _isPostingOrder = false;
+  List<SitesModelData> sitesModelDataList = [];
 
   final _textBasseyn = <String>[
     'strength',
@@ -81,6 +82,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    apiGetSites();
     readData();
     super.onInit();
   }
@@ -138,12 +140,12 @@ class HomeController extends GetxController {
 
   Future<void> _launchUrl(String url, bool isPhoneCall) async {
     if(isPhoneCall){
-      if (await canLaunch(url)) {
-        await launch(url);
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
       }
     }else{
-      if (await canLaunch(url)) {
-        await launch(url, forceSafariVC: false);
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url),);
       }
     }
   }
@@ -324,7 +326,7 @@ class HomeController extends GetxController {
       Timer(const Duration(seconds: 3), () => Get.back());
     }
   }
-  Future<void> postOrder(BuildContext context, String productId) async {
+  Future<void> postOrder(BuildContext context, int productId) async {
     String name = nameController.text.trim().toString();
     String phone = phoneController.text.trim().toString();
     String address = addressController.text.trim().toString();
@@ -369,5 +371,17 @@ class HomeController extends GetxController {
     _language = _language == 'uz' ? 'ru' : 'uz';
     update();
     AppTranslations.changeLocale(_language);
+  }
+
+  void apiGetSites() {
+    DioService().GET(api: Environment.envVariable('apiGetSites'), params: DioService().paramsEmpty()).then((value) => {
+     parseSites(value),
+    });
+  }
+  void parseSites(String? response) {
+    if(response != null){
+      SitesModel sitesModel = sitesModelFromJson(response);
+      sitesModelDataList = sitesModel.data;
+    }
   }
 }

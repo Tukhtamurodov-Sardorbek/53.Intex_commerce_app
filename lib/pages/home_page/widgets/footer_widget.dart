@@ -12,6 +12,7 @@ import 'package:intex_commerce/pages/home_page/widgets/text_fields.dart';
 import 'dialog_widgets.dart';
 
 class Footer extends StatelessWidget {
+
   const Footer({Key? key}) : super(key: key);
 
   @override
@@ -39,6 +40,7 @@ class Footer extends StatelessWidget {
                       next: true,
                       height: 37.h,
                       hint: "name".tr,
+
                       displayShadow: false,
                       isConsultDialog: false,
                       textController: controller.footerNameController,
@@ -53,6 +55,7 @@ class Footer extends StatelessWidget {
                        displayShadow: false,
                        isConsultDialog: false,
                        phoneController: controller.footerPhoneController,
+                       hintText: "number".tr,
                      ),
                   ),
                   AppSpaces.spaceVertical12,
