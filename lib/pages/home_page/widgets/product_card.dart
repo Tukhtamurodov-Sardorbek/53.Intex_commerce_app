@@ -29,7 +29,6 @@ class ProductCard extends GetView<HomeController> {
           boxShadow: [appBoxShadowCard()],
         ),
         child: CachedNetworkImage(
-
           imageUrl: controller
               .products[superIndex]
                   [controller.categories[superIndex].id]![index]
@@ -122,7 +121,7 @@ class ProductCardUi extends StatelessWidget {
           AppSpaces.spaceVertical12,
           Center(
             child: Text(
-              controller.getProductCategoryName(
+              controller.getProductName(
                   superIndex: superIndex, index: index, categoryId: categoryId),
               style: AppTextStyles.productTitle,
             ),
@@ -183,13 +182,17 @@ class ProductCardUi extends StatelessWidget {
                   height: 28.h,
                   width: 100.w,
                   decoration: BoxDecoration(
-                      color: controller.products[superIndex][categoryId]![index].statusId == 3 ? AppColors.grey : AppColors.yellow,
+                      color: controller.products[superIndex][categoryId]![index].statusId == 3
+                          ? AppColors.greyTextField
+                          : AppColors.yellow,
                       borderRadius: AppBorders.circularBlTr10,
                       boxShadow: [appBoxShadowCardOrder()]),
                   child: Center(
                     child: Text(
                       'order'.tr,
-                      style: controller.products[superIndex][categoryId]![index].statusId == 3 ?AppTextStyles.size12weight700White :AppTextStyles.size12weight700Black,
+                      style: controller.products[superIndex][categoryId]![index].statusId == 3
+                          ? AppTextStyles.size12weight700
+                          : AppTextStyles.size12weight700Black,
                     ),
                   ),
                 ),
