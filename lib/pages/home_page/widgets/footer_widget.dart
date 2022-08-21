@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:intex_commerce/core/app_utils/app_borders.dart';
@@ -62,13 +63,19 @@ class Footer extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: AppBorders.circular10),
                     padding: EdgeInsets.zero,
                     onPressed: () {
-                      controller.openDialog(
-                          context: context,
-                          child: const ConsultDialog(),
-                      );
+                      if(controller.isPostingConsultation == false) {
+                        controller.postConsultation(context, true).timeout(
+                            const Duration(seconds: 5),
+                            onTimeout: (){
+                              controller.failureOnConsultation(context);
+                            }
+                        );
+                      }
                     },
                     color: AppColors.yellow,
-                    child: Text(
+                    child: controller.isPostingConsultation
+                        ? const CupertinoActivityIndicator()
+                        : Text(
                       'want_consult'.tr,
                       style: AppTextStyles.size15weight700Black,
                     ),
