@@ -183,10 +183,12 @@ class ProductCardUi extends StatelessWidget {
                   width: 100.w,
                   decoration: BoxDecoration(
                       color: controller.products[superIndex][categoryId]![index].statusId == 3
-                          ? AppColors.greyTextField
+                          ? Colors.grey.shade400
                           : AppColors.yellow,
                       borderRadius: AppBorders.circularBlTr10,
-                      boxShadow: [appBoxShadowCardOrder()]),
+                      boxShadow: controller.products[superIndex][categoryId]![index].statusId == 3
+                          ? null : [appBoxShadowCardOrder()],
+                  ),
                   child: Center(
                     child: Text(
                       'order'.tr,
