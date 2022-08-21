@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intex_commerce/core/app_utils/app_colors.dart';
-import 'package:intex_commerce/core/app_utils/app_text_styles.dart';
 import 'package:intex_commerce/core/app_utils/box_shadow.dart';
 import 'package:get/get.dart';
 
@@ -46,7 +45,7 @@ class TextFieldString extends StatelessWidget {
           contentPadding: const EdgeInsets.all(12.0),
 
           hintText: hint,
-          hintStyle: hint == "name".tr ?AppTextStyles.size15Weight700 : AppTextStyles.size20weight700Grey,
+          // hintStyle: AppTextStyles.size20weight400Grey,
 
           border: InputBorder.none,
           enabledBorder: OutlineInputBorder(
@@ -73,7 +72,6 @@ class PhoneTextField extends StatelessWidget {
   final double height;
   final bool isConsultDialog;
   final bool displayShadow;
-  final String hintText;
   final TextEditingController phoneController;
   const PhoneTextField({
     Key? key,
@@ -81,7 +79,7 @@ class PhoneTextField extends StatelessWidget {
     required this.next,
     required this.isConsultDialog,
     required this.displayShadow,
-    required this.phoneController, required this.hintText,
+    required this.phoneController,
   }) : super(key: key);
 
   @override
@@ -103,8 +101,7 @@ class PhoneTextField extends StatelessWidget {
         decoration: InputDecoration(
           filled: true,
           fillColor: AppColors.textFieldFillColor,
-          hintText: hintText,
-          hintStyle: hintText == "number".tr ? AppTextStyles.size15Weight700 : AppTextStyles.size20weight700Grey,
+          hintText: 'your_number'.tr,
           contentPadding: const EdgeInsets.all(12.0),
           border: InputBorder.none,
           enabledBorder: OutlineInputBorder(
