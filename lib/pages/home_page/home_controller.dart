@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intex_commerce/core/app_utils/app_colors.dart';
 import 'package:intex_commerce/data/dio_client.dart';
@@ -24,26 +24,17 @@ class HomeController extends GetxController {
   final scrollController = ScrollController();
 
   final footerNameController = TextEditingController();
-  final footerPhoneController = MaskedTextController(mask: '00 000 00 00');
+  final footerPhoneController = TextEditingController();
 
   final consultNameController = TextEditingController();
-  final consultPhoneController = MaskedTextController(mask: '00 000 00 00');
+  final consultPhoneController = TextEditingController();
 
   final nameController = TextEditingController();
-  final phoneController = MaskedTextController(mask: '00 000 00 00');
+  final phoneController = TextEditingController();
   final addressController = TextEditingController();
 
   List<Map<int, List<Product>>> _products = [];
   DateTime _lastPressed = DateTime(0);
-  Info _info = Info(
-      phoneNumber: '+998(99)535-53-33',
-      addressRu: 'Проспект Мустакиллик\n59А 100000 Узбекистан,\nТашкент',
-      addressUz: 'Mustaqillik shoh ko\'chasi\n59А 100000 O\'zbekiston,\nToshkent',
-      workTimeRu: 'Будние дни: 10:00 - 22:00\nБез выходных',
-      workTimeUz: 'Ish kunlari: 10:00 - 22:00\nDam olish kunlarisiz',
-      telegramLink: 'https://t.me/basseinintexuzb',
-      instagramLink: 'https://www.instagram.com/intexshop_uz/',
-  );
   List<Category> _categories = [];
   bool _displayShadow = false;
   String _language = 'ru';
@@ -58,6 +49,15 @@ class HomeController extends GetxController {
     'stylish_design',
     'high_quality',
   ];
+  Info _info = Info(
+    phoneNumber: '+998(99)535-53-33',
+    addressRu: 'Проспект Мустакиллик\n59А 100000 Узбекистан,\nТашкент',
+    addressUz: 'Mustaqillik shoh ko\'chasi\n59А 100000 O\'zbekiston,\nToshkent',
+    workTimeRu: 'Будние дни: 10:00 - 22:00\nБез выходных',
+    workTimeUz: 'Ish kunlari: 10:00 - 22:00\nDam olish kunlarisiz',
+    telegramLink: 'https://t.me/basseinintexuzb',
+    instagramLink: 'https://www.instagram.com/intexshop_uz/',
+  );
 
   // * Getters & Setters
   List<Map<int, List<Product>>> get products => _products;
@@ -69,6 +69,13 @@ class HomeController extends GetxController {
   bool get displayShadow => _displayShadow;
   bool get isPostingConsultation => _isPostingConsultation;
   bool get isPostingOrder => _isPostingOrder;
+
+  // set isPostingConsultation(bool value){
+  //   if(_isPostingConsultation != value){
+  //     _isPostingConsultation = value;
+  //     update();
+  //   }
+  // }
 
   set displayShadow(bool value) {
     if (_displayShadow != value) {
@@ -93,6 +100,44 @@ class HomeController extends GetxController {
   void onInit() {
     readData();
     super.onInit();
+  }
+
+  readData() async {
+    List<Product> productList = [];
+
+    if(StorageService.to.getData(StorageKeys.info) is Info){
+      _info = StorageService.to.getData(StorageKeys.info);
+    }else{
+      _info = Info.fromJson(StorageService.to.getData(StorageKeys.info));
+    }
+
+    if (StorageService.to.getData(StorageKeys.categoryList) is List<Category>) {
+      _categories = StorageService.to.getData(StorageKeys.categoryList);
+    } else {
+      if (StorageService.to.checkData(StorageKeys.categoryList)){
+        _categories = List<Category>.from(StorageService.to.getData(StorageKeys.categoryList).map((x) => Category.fromJson(x)));
+      }
+    }
+
+    if (StorageService.to.getData(StorageKeys.productList) is List<Product>) {
+      productList = StorageService.to.getData(StorageKeys.productList);
+    } else {
+      if (StorageService.to.checkData(StorageKeys.categoryList) && StorageService.to.checkData(StorageKeys.productList)){
+        productList = List<Product>.from(StorageService.to.getData(StorageKeys.productList).map((x) => Product.fromJson(x)));
+      }
+    }
+    _products.clear();
+    update();
+
+    for (int i = 0; i < _categories.length; i++) {
+      _products.add({
+        _categories[i].id: productList.where((element) => element.categoryId == _categories[i].id).toList()
+      });
+    }
+    update();
+    Log.i('READ INFO $_info');
+    Log.i('READ CATEGORIES: $_categories');
+    Log.i('READ PRODUCTS $_products');
   }
 
   // * Methods
@@ -241,6 +286,8 @@ class HomeController extends GetxController {
   void clearConsultTextControllers() {
     consultNameController.clear();
     consultPhoneController.clear();
+    footerPhoneController.clear();
+    footerNameController.clear();
     update();
   }
 
@@ -252,68 +299,32 @@ class HomeController extends GetxController {
     );
   }
 
-  readData() async {
-    List<Product> productList = [];
-
-    if(StorageService.to.getData(StorageKeys.info) is Info){
-     _info = StorageService.to.getData(StorageKeys.info);
-    }else{
-      _info = Info.fromJson(StorageService.to.getData(StorageKeys.info));
-    }
-
-    if (StorageService.to.getData(StorageKeys.categoryList) is List<Category>) {
-      _categories = StorageService.to.getData(StorageKeys.categoryList);
-    } else {
-      if (StorageService.to.checkData(StorageKeys.categoryList)){
-        _categories = List<Category>.from(StorageService.to.getData(StorageKeys.categoryList).map((x) => Category.fromJson(x)));
-      }
-    }
-
-    if (StorageService.to.getData(StorageKeys.productList) is List<Product>) {
-      productList = StorageService.to.getData(StorageKeys.productList);
-    } else {
-      if (StorageService.to.checkData(StorageKeys.categoryList) && StorageService.to.checkData(StorageKeys.productList)){
-        productList = List<Product>.from(StorageService.to.getData(StorageKeys.productList).map((x) => Product.fromJson(x)));
-      }
-    }
-    _products.clear();
-    update();
-
-    for (int i = 0; i < _categories.length; i++) {
-      _products.add({
-        _categories[i].id: productList.where((element) => element.categoryId == _categories[i].id).toList()
-      });
-    }
-    update();
-    Log.i('READ INFO $_info');
-    Log.i('READ CATEGORIES: $_categories');
-    Log.i('READ PRODUCTS $_products');
-  }
-
   /// Network
-  Future<void> postConsultation(BuildContext context) async {
-    String name = consultNameController.text.trim().toString();
-    String phone = consultPhoneController.text.trim().toString();
+  Future<void> postConsultation(BuildContext context, bool isFromFooter) async {
+    late String name;
+    late String phone;
+    if(isFromFooter){
+      name = footerNameController.text.trim().toString();
+      phone = footerPhoneController.text.trim().toString();
+    }else{
+      name = consultNameController.text.trim().toString();
+      phone = consultPhoneController.text.trim().toString();
+    }
     bool hasInternet = await InternetConnectionChecker().hasConnection;
 
-    if (name.isNotEmpty && phone.length == 12) {
+    if (name.isNotEmpty && phone.length == 17 && phone.startsWith('+998')) {
+      Log.w('PHONE: $phone');
       _isPostingConsultation = true;
       update();
 
       if(hasInternet){
-        await DioService().POST(
+        final response = await DioService().POST(
             api: Environment.envVariable('apiCreateConsultation'),
-            body: {"name": name, "phoneNumber": phone}).then((value) => {
-              consultationResponse(context: context, response: value),
-        });
-      }else{
-        _isPostingConsultation = false;
-        update();
-        Get.back();
-        showDialog(
-          context: context,
-          builder: (context) => const FailDialog(),
+            body: {"name": name, "phoneNumber": phone},
         );
+        await _consultationResponse(response: response, context: context);
+      }else{
+        failureOnConsultation(context);
       }
     } else {
       showDialog(
@@ -323,47 +334,48 @@ class HomeController extends GetxController {
       Timer(const Duration(seconds: 3), () => Get.back());
     }
   }
-  void consultationResponse({required String? response, required BuildContext context}) {
+  Future<void> _consultationResponse({required String? response, required BuildContext context}) async{
+    _isPostingConsultation = false;
+    update();
     if (response != null) {
-      _isPostingConsultation = false;
-      update();
       Get.back();
       openDialog(
         context: context,
         child: const SuccessDialog(),
       );
       clearConsultTextControllers();
+    }else {
+      showDialog(
+        context: context,
+        builder: (context) => const FailDialog(),
+      );
     }
   }
+
   Future<void> postOrder(BuildContext context, String productId) async {
     String name = nameController.text.trim().toString();
     String phone = phoneController.text.trim().toString();
     String address = addressController.text.trim().toString();
     bool hasInternet = await InternetConnectionChecker().hasConnection;
 
-    if (name.isNotEmpty && phone.length == 12 && address.isNotEmpty) {
-      Log.wtf("$phone => ${phone.length}");
+    if (name.isNotEmpty && phone.length == 17 && phone.startsWith('+998') && address.isNotEmpty) {
+      Log.w('PHONE: $phone');
       _isPostingOrder = true;
       update();
+
       if(hasInternet){
-        await DioService().POST(
+        final response = await DioService().POST(
             api: Environment.envVariable('apiCreateOrder'),
             body: {
               "productId": productId,
               "name": name,
               "phoneNumber": phone,
               "address": address,
-            }).then((value) => {
-              orderResponse(context: context, response: value),
-        });
-      }else{
-        _isPostingOrder = false;
-        update();
-        Get.back();
-        showDialog(
-          context: context,
-          builder: (context) => const FailDialog(),
+            },
         );
+        await _orderResponse(response: response, context: context);
+      }else{
+        failureOnOrdering(context);
       }
     } else {
       showDialog(
@@ -373,32 +385,51 @@ class HomeController extends GetxController {
       Timer(const Duration(seconds: 3), () => Get.back());
     }
   }
-  void orderResponse({required String? response, required BuildContext context}) {
+  Future<void> _orderResponse({required String? response, required BuildContext context}) async{
     Log.wtf(response ?? 'NO ORDER RESPONSE');
+    _isPostingOrder = false;
+    update();
 
-    if(response != null && response == 'not_available'){
-      _isPostingOrder = false;
-      update();
-      Get.back();
-      openDialog(
-        context: context,
-        child: const OutOfStockDialog(),
-      );
-      clearTextControllers();
-      handleRefresh();
-    }
-    else if (response != null && response != 'not_available') {
-      _isPostingOrder = false;
-      update();
+    if(response != null){
       Get.back();
       openDialog(
         context: context,
         child: const SuccessDialog(),
       );
       clearTextControllers();
+    } else if(response == '406'){
+      openDialog(
+        context: context,
+        child: const OutOfStockDialog(),
+      );
+      clearTextControllers();
+      handleRefresh();
+    }else {
+    showDialog(
+    context: context,
+    builder: (context) => const FailDialog(),
+    );
     }
   }
 
+  void failureOnConsultation(BuildContext ctr){
+    _isPostingConsultation = false;
+    update();
+    Get.back();
+    showDialog(
+      context: ctr,
+      builder: (context) => const FailDialog(),
+    );
+  }
+  void failureOnOrdering(BuildContext ctr){
+    _isPostingOrder = false;
+    update();
+    Get.back();
+    showDialog(
+      context: ctr,
+      builder: (context) => const FailDialog(),
+    );
+  }
 
   /// Localization
   void changeLanguage() {
