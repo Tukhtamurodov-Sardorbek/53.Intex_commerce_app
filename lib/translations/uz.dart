@@ -39,8 +39,6 @@ final Map<String, String> uz = {
   "thanks":"Rahmat!",
   "free_shipping_pool": "Basseyni bepul yetkazib berish",
   "working_time": "Ish vaqti",
-  "weekdays": "Ish kunlari: 10:00 - 22:00\nDam olish kunlarisiz",
-  "address": "Intex.uz\n+998(99)535-53-33\nMustaqillik shoh ko'chasi\n59А 100000 O'zbekiston,\nToshkent",
   "developed": "Premium Digital tomonidan yaratilgan",
   "rights_reserved": "Barcha huquqlar himoyalangan.",
   "value_our": "Biz mijozlarimizni qadrlaymiz, siz bizning xizmatimiz sifatiga amin bo'lishingiz mumkin!",
