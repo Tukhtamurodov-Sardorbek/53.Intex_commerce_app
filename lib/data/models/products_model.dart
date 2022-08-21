@@ -22,6 +22,10 @@ class ProductModel {
     "message": message,
     "data": List<dynamic>.from(data.map((x) => x.toJson())),
   };
+
+  String string(){
+    return '${data.map((e) => '\n' + e.toString()).toList()}\n';
+  }
 }
 
 class Product {
@@ -44,10 +48,8 @@ class Product {
    required this.statusRu,
    required this.statusUz,
   });
-/*
-net prodajidagi button ozgarishi kerak
- */
-  int id;
+
+  String id;
   int categoryId;
   String categoryNameUz;
   String categoryNameRu;
@@ -104,4 +106,8 @@ net prodajidagi button ozgarishi kerak
     "status_ru": statusRu,
     "status_uz": statusUz,
   };
+
+  String toString(){
+    return 'id: $id | category_id: $categoryId | status_id: $statusId | status_ru: $statusRu | frame_ru: $frameRu';
+  }
 }
