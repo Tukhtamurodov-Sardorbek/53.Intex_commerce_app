@@ -22,6 +22,10 @@ class CaterogyModel {
     "message": message,
     "data": List<dynamic>.from(data.map((x) => x.toJson())),
   };
+
+  String string(){
+    return '${data.map((e) => '\n' + e.toString()).toList()}\n';
+  }
 }
 
 class Category {
@@ -46,4 +50,8 @@ class Category {
     "name_ru": nameRu,
     "name_uz": nameUz,
   };
+
+  String toString(){
+    return 'id: $id | name_ru: $nameRu | name_uz: $nameUz';
+  }
 }
