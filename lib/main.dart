@@ -16,7 +16,7 @@ import 'package:intex_commerce/core/app_utils/scroll_config.dart';
 import 'package:intex_commerce/translations/app_translations.dart';
 import 'package:intex_commerce/core/app_services/database_service.dart';
 
-bool checkResponsiveness = 0 != 0;
+bool checkResponsiveness = 0 == 0;
 
 void main() async {
   dotenv.load();
