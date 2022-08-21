@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intex_commerce/core/app_utils/app_colors.dart';
 import 'package:intex_commerce/core/app_utils/box_shadow.dart';
 import 'package:get/get.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 /// Text field for String type
 class TextFieldString extends StatelessWidget {
@@ -68,12 +70,13 @@ class TextFieldString extends StatelessWidget {
 
 /// Text field for phone number
 class PhoneTextField extends StatelessWidget {
+  final maskFormatter = MaskTextInputFormatter(mask: '+998 ## ### ## ##');
   final bool next;
   final double height;
   final bool isConsultDialog;
   final bool displayShadow;
   final TextEditingController phoneController;
-  const PhoneTextField({
+  PhoneTextField({
     Key? key,
     required this.height,
     required this.next,
@@ -93,6 +96,8 @@ class PhoneTextField extends StatelessWidget {
       ),
 
       child: TextField(
+        inputFormatters: [maskFormatter],
+
         controller: phoneController,
         cursorColor: AppColors.main,
         keyboardType: TextInputType.phone,
