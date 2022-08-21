@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intex_commerce/core/app_services/log_service.dart';
 import 'package:intex_commerce/core/app_utils/app_borders.dart';
 import 'package:intex_commerce/core/app_utils/app_colors.dart';
 import 'package:intex_commerce/core/app_utils/app_spaces.dart';
@@ -62,21 +63,27 @@ class NoInternetConnectionPage extends GetView<NoInternetConnectionController> {
                     height: 50.h,
                     minWidth: double.infinity,
                     color: AppColors.main,
-                    shape: RoundedRectangleBorder(borderRadius: AppBorders.circular10),
-                    onPressed: controller.onPressed,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: AppBorders.circular10),
+                    onPressed: () {
+                      if (controller.isLoading == false) {
+                        Log.w('PRESSED');
+                        controller.onPressed();
+                      }
+                    },
                     child: controller.isLoading
                         ? Theme(
-                      data: ThemeData(
-                        cupertinoOverrideTheme: const CupertinoThemeData(
-                          brightness: Brightness.light,
-                        ),
-                      ),
-                      child: CupertinoActivityIndicator(
-                        radius: 12.r,
-                        color: AppColors.white,
-                        animating: true,
-                      ),
-                    )
+                            data: ThemeData(
+                              cupertinoOverrideTheme: const CupertinoThemeData(
+                                brightness: Brightness.light,
+                              ),
+                            ),
+                            child: CupertinoActivityIndicator(
+                              radius: 12.r,
+                              color: AppColors.white,
+                              animating: true,
+                            ),
+                          )
                         : Center(
                             child: Text(
                               'try_again'.tr,
