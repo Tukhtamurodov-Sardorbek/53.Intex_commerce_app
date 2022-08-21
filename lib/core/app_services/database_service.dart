@@ -5,6 +5,7 @@ enum StorageKeys {
   language,
   categoryList,
   productList,
+  info,
 }
 
 class StorageService {
