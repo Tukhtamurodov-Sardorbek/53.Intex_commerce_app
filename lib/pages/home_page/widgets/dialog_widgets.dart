@@ -191,7 +191,12 @@ class OrderDialog extends StatelessWidget {
                   color: AppColors.yellow,
                   onPressed: () {
                     if(controller.isPostingOrder == false){
-                      controller.postOrder(context, id);
+                      controller.postOrder(context, id).timeout(
+                          const Duration(seconds: 5),
+                          onTimeout: (){
+                            controller.failureOnOrdering(context);
+                          }
+                      );
                     }
                   },
                   child: controller.isPostingOrder
@@ -279,7 +284,12 @@ class ConsultDialog extends StatelessWidget {
                       ),
                 onPressed: () {
                   if(controller.isPostingConsultation == false) {
-                    controller.postConsultation(context);
+                    controller.postConsultation(context, false).timeout(
+                        const Duration(seconds: 5),
+                        onTimeout: (){
+                          controller.failureOnConsultation(context);
+                        }
+                    );
                   }
                 },
               ),
@@ -432,3 +442,9 @@ class WarningDialog extends StatelessWidget {
     );
   }
 }
+/*
+controller.openDialog(
+                          context: context,
+                          child: const ConsultDialog(),
+                      );
+ */
