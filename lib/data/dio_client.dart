@@ -50,7 +50,11 @@ class DioService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonEncode(response.data);
       }
-    } on DioError catch (e) {}
+    } on DioError catch (e) {
+      if(e.response?.statusCode == 406){
+        return '406';
+      }
+    }
     return null;
   }
 
