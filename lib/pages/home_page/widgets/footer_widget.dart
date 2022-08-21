@@ -12,7 +12,6 @@ import 'package:intex_commerce/pages/home_page/widgets/text_fields.dart';
 import 'dialog_widgets.dart';
 
 class Footer extends StatelessWidget {
-
   const Footer({Key? key}) : super(key: key);
 
   @override
@@ -23,7 +22,7 @@ class Footer extends StatelessWidget {
           builder: (controller) {
             return Container(
               padding: AppSpaces.kTLRPadding,
-              height: 387.h,
+              height: 375.h,
               width: 375.w,
               color: AppColors.main,
               child: Column(
@@ -40,7 +39,6 @@ class Footer extends StatelessWidget {
                       next: true,
                       height: 37.h,
                       hint: "name".tr,
-
                       displayShadow: false,
                       isConsultDialog: false,
                       textController: controller.footerNameController,
@@ -55,7 +53,6 @@ class Footer extends StatelessWidget {
                        displayShadow: false,
                        isConsultDialog: false,
                        phoneController: controller.footerPhoneController,
-                       hintText: "number".tr,
                      ),
                   ),
                   AppSpaces.spaceVertical12,
@@ -104,7 +101,7 @@ class Footer extends StatelessWidget {
                                 ),
                                 AppSpaces.spaceVertical10,
                                 Text(
-                                  "weekdays".tr,
+                                  controller.getWorkTime(),
                                   style: AppTextStyles.size12weight700,
                                 ),
                                 AppSpaces.spaceVertical12,
@@ -112,12 +109,21 @@ class Footer extends StatelessWidget {
                               ],
                             ),
                         ),
+                        AppSpaces.spaceHorizontal15,
                         Expanded(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "address".tr,
+                                "Intex.uz",
+                                style: AppTextStyles.size12weight700,
+                              ),
+                              Text(
+                                controller.getPhone(),
+                                style: AppTextStyles.size12weight700,
+                              ),
+                              Text(
+                                controller.getAddress(),
                                 style: AppTextStyles.size12weight700,
                               ),
                               AppSpaces.spaceVertical20,
