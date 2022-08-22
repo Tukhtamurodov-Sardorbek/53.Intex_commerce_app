@@ -127,6 +127,12 @@ class AppTextStyles {
       fontFamily: "Trebuchet MS",
       color: AppColors.white,
   );
+  static final size15weight700Grey = TextStyle(
+      fontSize: 15.sp,
+      fontWeight: FontWeight.w700,
+      fontFamily: "Trebuchet MS",
+      color: AppColors.lightGrey,
+  );
 
   static final size15weight700Black = TextStyle(
       fontSize: 15.sp,
