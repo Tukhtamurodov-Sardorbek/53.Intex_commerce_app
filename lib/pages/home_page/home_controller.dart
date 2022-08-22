@@ -124,11 +124,13 @@ class HomeController extends GetxController {
     update();
 
     for (int i = 0; i < _categories.length; i++) {
+      Log.v("${_categories[i].id}");
       _products.add({
         _categories[i].id: productList.where((element) => element.categoryId == _categories[i].id).toList()
       });
     }
     update();
+
     Log.i('READ INFO $_info');
     Log.i('READ CATEGORIES: $_categories');
     Log.i('READ PRODUCTS $_products');
@@ -335,7 +337,7 @@ class HomeController extends GetxController {
       Get.back();
       openDialog(
         context: context,
-        child: const SuccessDialog(),
+        child: const SuccessDialog(isConsult: true),
       );
       clearConsultTextControllers();
     }else {
@@ -388,7 +390,7 @@ class HomeController extends GetxController {
       Get.back();
       openDialog(
         context: context,
-        child: const SuccessDialog(),
+        child: const SuccessDialog(isConsult: false),
       );
       clearTextControllers();
     } else if(response == '406'){
