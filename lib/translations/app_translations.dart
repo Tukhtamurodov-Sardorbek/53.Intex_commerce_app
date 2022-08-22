@@ -39,8 +39,6 @@ class AppTranslations extends Translations {
   );
 
   static Locale defaultLanguage(BuildContext context) {
-    DevicePreview.locale(context);
-
     final locale = GetStorage().read("language");
     String? lan = locale;
     if(lan == null){
