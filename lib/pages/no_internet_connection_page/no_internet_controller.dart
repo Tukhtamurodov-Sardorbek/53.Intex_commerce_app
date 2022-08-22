@@ -29,7 +29,7 @@ class NoInternetConnectionController extends GetxController {
 
   Future<void> _updateConnectionStatus(InternetConnectionStatus status) async {
     if (status == InternetConnectionStatus.connected) {
-      Get.find<SplashController>().fetchData(false);
+      Get.find<SplashController>().fetchData();
     }
   }
 
@@ -74,7 +74,7 @@ class NoInternetConnectionController extends GetxController {
     isLoading = false;
 
     if (hasInternet) {
-      Get.find<SplashController>().fetchData(false);
+      Get.find<SplashController>().fetchData();
     }
   }
 }
