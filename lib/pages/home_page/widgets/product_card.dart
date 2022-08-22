@@ -117,7 +117,7 @@ class ProductCardUi extends StatelessWidget {
                     ),
                   ],
                 )
-              : const SizedBox.shrink(),
+              : SizedBox(height: 26.h),
           AppSpaces.spaceVertical12,
           Center(
             child: Text(
