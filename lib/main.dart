@@ -68,8 +68,10 @@ class MyApp extends StatelessWidget {
             getPages: AppPages.pages,
 
             // * Localization
-            locale: const Locale('ru'),
-            fallbackLocale: const Locale('ru'),
+            locale: checkResponsiveness
+                ? DevicePreview.locale(context)
+                : AppTranslations.defaultLanguage(context),
+            fallbackLocale: const Locale('ru', "RU"),
             translations: AppTranslations(),
             // fallbackLocale: const Locale('ru', "RU"),
             localizationsDelegates: const [
