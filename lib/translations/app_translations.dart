@@ -34,19 +34,24 @@ class AppTranslations extends Translations {
     const Locale('ru', 'RU'),
   ];
 
-  static final locale = defLanguage(
-    StorageService().getData<String>(StorageKeys.language) ?? AppTranslations.langs[1],
-  );
+  // static final locale = defLanguage(
+  //   StorageService().getData<String>(StorageKeys.language) ?? AppTranslations.langs[1],
+  // );
 
   static Locale defaultLanguage(BuildContext context) {
-    final locale = GetStorage().read("language");
-    String? lan = locale;
-    if(lan == null){
+    late String? locale;
+    if(StorageService.to.checkData(StorageKeys.language)){
+      locale = StorageService.to.getData(StorageKeys.language);
+    }else{
+      locale = null;
+    }
+
+    if(locale == null){
       return locales[1];
     }
-    else if (lan == "uz") {
+    else if (locale == 'uz') {
       return locales[0];
-    } else if(lan == "ru") {
+    } else if(locale == 'ru') {
       return locales[1];
     } else {
       return locales[1];
