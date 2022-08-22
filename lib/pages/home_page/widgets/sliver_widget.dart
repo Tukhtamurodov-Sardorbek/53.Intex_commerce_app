@@ -5,6 +5,7 @@ import 'package:intex_commerce/core/app_utils/app_spaces.dart';
 import 'package:intex_commerce/core/app_utils/app_text_styles.dart';
 import 'package:intex_commerce/core/app_utils/box_shadow.dart';
 import 'package:intex_commerce/pages/home_page/home_controller.dart';
+import 'package:intex_commerce/pages/home_page/widgets/dialog_widgets.dart';
 import 'package:intex_commerce/pages/home_page/widgets/label_widget.dart';
 import 'check_icons_widget.dart';
 import 'package:get/get.dart';
@@ -45,9 +46,13 @@ class SliverWidget extends StatelessWidget {
                     width: 167.w,
                     decoration: BoxDecoration(boxShadow: [appBoxShadowIcon()]),
                     child: MaterialButton(
-                      onPressed: () {},
-                      shape: RoundedRectangleBorder(
-                          borderRadius: AppBorders.circular10),
+                      onPressed: () {
+                        controller.openDialog(
+                          context: context,
+                          child: const ConsultDialog(),
+                        );
+                      },
+                      shape: RoundedRectangleBorder(borderRadius: AppBorders.circular10),
                       padding: EdgeInsets.zero,
                       color: AppColors.yellow,
                       child: Text(
