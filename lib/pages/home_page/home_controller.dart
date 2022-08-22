@@ -37,7 +37,7 @@ class HomeController extends GetxController {
   DateTime _lastPressed = DateTime(0);
   List<Category> _categories = [];
   bool _displayShadow = false;
-  String _language = 'ru';
+  late String _language;
   String _dioException = '';
   bool _isPostingConsultation = false;
   bool _isPostingOrder = false;
@@ -92,6 +92,11 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    if(StorageService.to.checkData(StorageKeys.language)){
+    _language = StorageService.to.getData(StorageKeys.language);
+    }else{
+    _language = 'ru';
+    }
     readData();
     super.onInit();
   }
@@ -441,6 +446,7 @@ class HomeController extends GetxController {
   void changeLanguage() {
     _language = _language == 'uz' ? 'ru' : 'uz';
     update();
+    StorageService.to.setData(StorageKeys.language, _language);
     AppTranslations.changeLocale(_language);
   }
 }
