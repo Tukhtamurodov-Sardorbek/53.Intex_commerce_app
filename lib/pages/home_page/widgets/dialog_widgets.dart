@@ -57,7 +57,7 @@ class ProductPreview extends StatelessWidget {
 class OrderDialog extends StatelessWidget {
   final String title;
   final String image;
-  final String id;
+  final int id;
   final String price;
 
   const OrderDialog({
@@ -442,6 +442,7 @@ class WarningDialog extends StatelessWidget {
     );
   }
 }
+
 /*
 controller.openDialog(
                           context: context,
