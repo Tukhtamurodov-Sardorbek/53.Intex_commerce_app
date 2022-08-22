@@ -51,6 +51,7 @@ class DioService {
         return jsonEncode(response.data);
       }
     } on DioError catch (e) {
+      Log.wtf('STAUS: ${e.response?.statusCode}');
       if(e.response?.statusCode == 406){
         return '406';
       }

@@ -70,21 +70,22 @@ class HomeController extends GetxController {
   bool get isPostingConsultation => _isPostingConsultation;
   bool get isPostingOrder => _isPostingOrder;
 
-
   set displayShadow(bool value) {
     if (_displayShadow != value) {
       _displayShadow = value;
       update();
     }
   }
+
   set isPostingOrder(bool value) {
     if (_isPostingOrder != value) {
       _isPostingOrder = value;
       update();
     }
   }
-  set dioException(String msg){
-    if(_dioException != msg){
+
+  set dioException(String msg) {
+    if (_dioException != msg) {
       _dioException = msg;
       update();
     }
@@ -92,10 +93,10 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    if(StorageService.to.checkData(StorageKeys.language)){
-    _language = StorageService.to.getData(StorageKeys.language);
-    }else{
-    _language = 'ru';
+    if (StorageService.to.checkData(StorageKeys.language)) {
+      _language = StorageService.to.getData(StorageKeys.language);
+    } else {
+      _language = 'ru';
     }
     readData();
     super.onInit();
@@ -104,25 +105,30 @@ class HomeController extends GetxController {
   readData() async {
     List<Product> productList = [];
 
-    if(StorageService.to.getData(StorageKeys.info) is Info){
+    if (StorageService.to.getData(StorageKeys.info) is Info) {
       _info = StorageService.to.getData(StorageKeys.info);
-    }else{
+    } else {
       _info = Info.fromJson(StorageService.to.getData(StorageKeys.info));
     }
 
     if (StorageService.to.getData(StorageKeys.categoryList) is List<Category>) {
       _categories = StorageService.to.getData(StorageKeys.categoryList);
     } else {
-      if (StorageService.to.checkData(StorageKeys.categoryList)){
-        _categories = List<Category>.from(StorageService.to.getData(StorageKeys.categoryList).map((x) => Category.fromJson(x)));
+      if (StorageService.to.checkData(StorageKeys.categoryList)) {
+        _categories = List<Category>.from(StorageService.to
+            .getData(StorageKeys.categoryList)
+            .map((x) => Category.fromJson(x)));
       }
     }
 
     if (StorageService.to.getData(StorageKeys.productList) is List<Product>) {
       productList = StorageService.to.getData(StorageKeys.productList);
     } else {
-      if (StorageService.to.checkData(StorageKeys.categoryList) && StorageService.to.checkData(StorageKeys.productList)){
-        productList = List<Product>.from(StorageService.to.getData(StorageKeys.productList).map((x) => Product.fromJson(x)));
+      if (StorageService.to.checkData(StorageKeys.categoryList) &&
+          StorageService.to.checkData(StorageKeys.productList)) {
+        productList = List<Product>.from(StorageService.to
+            .getData(StorageKeys.productList)
+            .map((x) => Product.fromJson(x)));
       }
     }
     _products.clear();
@@ -131,7 +137,9 @@ class HomeController extends GetxController {
     for (int i = 0; i < _categories.length; i++) {
       Log.v("${_categories[i].id}");
       _products.add({
-        _categories[i].id: productList.where((element) => element.categoryId == _categories[i].id).toList()
+        _categories[i].id: productList
+            .where((element) => element.categoryId == _categories[i].id)
+            .toList()
       });
     }
     update();
@@ -175,13 +183,16 @@ class HomeController extends GetxController {
       scrollController.jumpTo(pos.h);
     }
   }
+
   bool _isDrawerOpen() {
     bool isOpen = scaffoldKey.currentState!.isDrawerOpen;
     return isOpen;
   }
+
   void openDrawer() {
     scaffoldKey.currentState!.openDrawer();
   }
+
   void closeDrawer() {
     scaffoldKey.currentState!.closeDrawer();
   }
@@ -192,11 +203,11 @@ class HomeController extends GetxController {
   //   const url = 'tel:$phoneNumber';
   // }
   Future<void> _launchUrl(String url, bool isPhoneCall) async {
-    if(isPhoneCall){
+    if (isPhoneCall) {
       if (await canLaunch('tel:$url')) {
         await launch('tel:$url');
       }
-    }else{
+    } else {
       if (await canLaunch(url)) {
         await launch(url, forceSafariVC: false);
       }
@@ -215,7 +226,8 @@ class HomeController extends GetxController {
   /// Form price
   String price(String priceStr) {
     int remainder = priceStr.length % 3;
-    String generate = remainder != 0 ? '${priceStr.substring(0, remainder)} ' : '';
+    String generate =
+        remainder != 0 ? '${priceStr.substring(0, remainder)} ' : '';
 
     for (int i = remainder; i < priceStr.length; i++) {
       if (i != 0 && (i - remainder + 1) % 3 == 0) {
@@ -228,22 +240,28 @@ class HomeController extends GetxController {
   }
 
   /// Get Data
-  String getStatus({required int superIndex, required int categoryId, required int index}) {
+  String getStatus(
+      {required int superIndex, required int categoryId, required int index}) {
     return _language == 'uz'
         ? _products[superIndex][categoryId]![index].statusUz
         : _products[superIndex][categoryId]![index].statusRu;
   }
-  String getProductName({required int superIndex, required int categoryId, required int index}) {
+
+  String getProductName(
+      {required int superIndex, required int categoryId, required int index}) {
     return _language == 'uz'
         ? _products[superIndex][categoryId]![index].frameUz
         : _products[superIndex][categoryId]![index].frameRu;
   }
+
   String getCategoryName({required int superIndex}) {
     return _language == 'uz'
         ? _categories[superIndex].nameUz
         : _categories[superIndex].nameRu;
   }
-  Color getStatusColor({required int superIndex, required int categoryId, required int index}) {
+
+  Color getStatusColor(
+      {required int superIndex, required int categoryId, required int index}) {
     final id = _products[superIndex][categoryId]![index].statusId;
     switch (id) {
       case 1:
@@ -257,21 +275,22 @@ class HomeController extends GetxController {
     }
   }
 
-  String getPhoneCall(){
-    String phoneToCall = _info.phoneNumber.replaceAll(RegExp(r'[^\+\d]+'),'');
-    if(phoneToCall.startsWith('998')){
+  String getPhoneCall() {
+    String phoneToCall = _info.phoneNumber.replaceAll(RegExp(r'[^\+\d]+'), '');
+    if (phoneToCall.startsWith('998')) {
       phoneToCall = '+$phoneToCall';
       update();
     }
     return phoneToCall;
   }
+
   String getPhone() => _info.phoneNumber;
   String getAddress() => _language == 'uz' ? _info.addressUz : _info.addressRu;
   String getWorkTime() {
     String workTime = '';
-    if(_language == 'uz'){
+    if (_language == 'uz') {
       workTime = _info.workTimeUz.replaceFirst('. ', '\n');
-    }else{
+    } else {
       workTime = _info.workTimeRu.replaceFirst('. ', '\n');
     }
     return workTime;
@@ -284,6 +303,7 @@ class HomeController extends GetxController {
     addressController.clear();
     update();
   }
+
   void clearConsultTextControllers() {
     consultNameController.clear();
     consultPhoneController.clear();
@@ -293,7 +313,8 @@ class HomeController extends GetxController {
   }
 
   /// Dialog
-  Future<dynamic> openDialog({required BuildContext context, required Widget child}) async {
+  Future<dynamic> openDialog(
+      {required BuildContext context, required Widget child}) async {
     return showDialog(
       context: context,
       builder: (BuildContext context) => child,
@@ -304,10 +325,10 @@ class HomeController extends GetxController {
   Future<void> postConsultation(BuildContext context, bool isFromFooter) async {
     late String name;
     late String phone;
-    if(isFromFooter){
+    if (isFromFooter) {
       name = footerNameController.text.trim().toString();
       phone = footerPhoneController.text.trim().toString();
-    }else{
+    } else {
       name = consultNameController.text.trim().toString();
       phone = consultPhoneController.text.trim().toString();
     }
@@ -318,13 +339,13 @@ class HomeController extends GetxController {
       _isPostingConsultation = true;
       update();
 
-      if(hasInternet){
+      if (hasInternet) {
         final response = await DioService().POST(
-            api: Environment.envVariable('apiCreateConsultation'),
-            body: {"name": name, "phoneNumber": formPhoneNumber(phone)},
+          api: Environment.envVariable('apiCreateConsultation'),
+          body: {"name": name, "phoneNumber": formPhoneNumber(phone)},
         );
         await _consultationResponse(response: response, context: context);
-      }else{
+      } else {
         failureOnConsultation(context);
       }
     } else {
@@ -335,7 +356,9 @@ class HomeController extends GetxController {
       Timer(const Duration(seconds: 3), () => Get.back());
     }
   }
-  Future<void> _consultationResponse({required String? response, required BuildContext context}) async{
+
+  Future<void> _consultationResponse(
+      {required String? response, required BuildContext context}) async {
     _isPostingConsultation = false;
     update();
     if (response != null) {
@@ -345,7 +368,7 @@ class HomeController extends GetxController {
         child: const SuccessDialog(isConsult: true),
       );
       clearConsultTextControllers();
-    }else {
+    } else {
       showDialog(
         context: context,
         builder: (context) => const FailDialog(),
@@ -359,23 +382,26 @@ class HomeController extends GetxController {
     String address = addressController.text.trim().toString();
     bool hasInternet = await InternetConnectionChecker().hasConnection;
 
-    if (name.isNotEmpty && phone.length == 17 && phone.startsWith('+998') && address.isNotEmpty) {
+    if (name.isNotEmpty &&
+        phone.length == 17 &&
+        phone.startsWith('+998') &&
+        address.isNotEmpty) {
       Log.w('PHONE: $phone');
       _isPostingOrder = true;
       update();
 
-      if(hasInternet){
+      if (hasInternet) {
         final response = await DioService().POST(
-            api: Environment.envVariable('apiCreateOrder'),
-            body: {
-              "productId": productId,
-              "name": name,
-              "phoneNumber": formPhoneNumber(phone),
-              "address": address,
-            },
+          api: Environment.envVariable('apiCreateOrder'),
+          body: {
+            "productId": productId,
+            "name": name,
+            "phoneNumber": formPhoneNumber(phone),
+            "address": address,
+          },
         );
         await _orderResponse(response: response, context: context);
-      }else{
+      } else {
         failureOnOrdering(context);
       }
     } else {
@@ -386,34 +412,36 @@ class HomeController extends GetxController {
       Timer(const Duration(seconds: 3), () => Get.back());
     }
   }
-  Future<void> _orderResponse({required String? response, required BuildContext context}) async{
+
+  Future<void> _orderResponse(
+      {required String? response, required BuildContext context}) async {
     Log.wtf(response ?? 'NO ORDER RESPONSE');
     _isPostingOrder = false;
     update();
 
-    if(response != null){
-      Get.back();
-      openDialog(
-        context: context,
-        child: const SuccessDialog(isConsult: false),
-      );
-      clearTextControllers();
-    } else if(response == '406'){
+    if (response != null && response == '406') {
       openDialog(
         context: context,
         child: const OutOfStockDialog(),
       );
       clearTextControllers();
       handleRefresh();
-    }else {
-    showDialog(
-    context: context,
-    builder: (context) => const FailDialog(),
-    );
+    } else if (response != null) {
+      Get.back();
+      openDialog(
+        context: context,
+        child: const SuccessDialog(isConsult: false),
+      );
+      clearTextControllers();
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => const FailDialog(),
+      );
     }
   }
 
-  void failureOnConsultation(BuildContext ctr){
+  void failureOnConsultation(BuildContext ctr) {
     _isPostingConsultation = false;
     update();
     Get.back();
@@ -422,7 +450,8 @@ class HomeController extends GetxController {
       builder: (context) => const FailDialog(),
     );
   }
-  void failureOnOrdering(BuildContext ctr){
+
+  void failureOnOrdering(BuildContext ctr) {
     _isPostingOrder = false;
     update();
     Get.back();
@@ -432,11 +461,11 @@ class HomeController extends GetxController {
     );
   }
 
-  formPhoneNumber(String phone){
-    if(phone.length == 17 && phone.startsWith('+998 ')){
+  formPhoneNumber(String phone) {
+    if (phone.length == 17 && phone.startsWith('+998 ')) {
       phone = phone.replaceAll('+998 ', '');
       update();
-    }else if(phone.length == 17 && phone.startsWith('+998')){
+    } else if (phone.length == 17 && phone.startsWith('+998')) {
       phone = phone.replaceFirst('+998', '');
     }
     return phone;
