@@ -38,7 +38,7 @@ final Map<String, String> ru = {
   "get_consultation": "Получить консультацию",
   "thanks": "Спасибо!",
   "successfully_ordered": "Ваш заказ успешно оформлен. Мы свяжемся с вами в ближайшее время.",
-  "successfully_consulted": "Ваш заказ успешно оформлен. Мы свяжемся с вами в ближайшее время.",
+  "successfully_consulted": "В ближайшее время с вами свяжется наш оператор",
   "working_time": "Рабочее время",
   "developed": "Разработано в Premium Digital",
   "rights_reserved": "Все права защищены.",
