@@ -302,7 +302,8 @@ class ConsultDialog extends StatelessWidget {
 }
 
 class SuccessDialog extends StatelessWidget {
-  const SuccessDialog({Key? key}) : super(key: key);
+  final bool isConsult;
+  const SuccessDialog({Key? key, required this.isConsult}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -329,7 +330,7 @@ class SuccessDialog extends StatelessWidget {
             Wrap(
               children: [
                 Text(
-                  "successfully_processed".tr,
+                  isConsult ? 'successfully_consulted'.tr : 'successfully_ordered'.tr,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.size18weight400,
                 ),
