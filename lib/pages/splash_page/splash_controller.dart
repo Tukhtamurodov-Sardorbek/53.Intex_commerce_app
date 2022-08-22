@@ -14,11 +14,11 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 class SplashController extends GetxController {
   @override
   void onInit() {
-    fetchData(false);
+    fetchData();
     super.onInit();
   }
 
-  Future<void> fetchData(bool isRefresh) async {
+  Future<void> fetchData() async {
     bool hasInternet = await InternetConnectionChecker().hasConnection;
     if (hasInternet) {
       await Future.wait([getCategoryList(), getProductList(), getInfo()]).then((value){
