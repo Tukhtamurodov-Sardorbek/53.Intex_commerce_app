@@ -226,7 +226,7 @@ class ConsultDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: AppBorders.circular35),
       child: GetBuilder<HomeController>(builder: (controller) {
         return Container(
-          height: 436.h,
+          height: 420.h,
           width: 330.w,
           padding: AppSpaces.kTBPadding1725,
           child: Column(
@@ -327,14 +327,17 @@ class SuccessDialog extends StatelessWidget {
             AppSpaces.spaceVertical30,
             Text("thanks".tr, style: AppTextStyles.size40weight700),
             AppSpaces.spaceVertical10,
-            Wrap(
-              children: [
-                Text(
-                  isConsult ? 'successfully_consulted'.tr : 'successfully_ordered'.tr,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.size18weight400,
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Wrap(
+                children: [
+                  Text(
+                    isConsult ? 'successfully_consulted'.tr : 'successfully_ordered'.tr,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.size18weight400,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -23,7 +23,7 @@ class Footer extends StatelessWidget {
           builder: (controller) {
             return Container(
               padding: AppSpaces.kTLRPadding,
-              height: 375.h,
+              height: 385.h,
               width: 375.w,
               color: AppColors.main,
               child: Column(
@@ -120,7 +120,7 @@ class Footer extends StatelessWidget {
                           AppSpaces.spaceHorizontal15,
                           Expanded(
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 AppSpaces.spaceVertical5,
                                 Text(
