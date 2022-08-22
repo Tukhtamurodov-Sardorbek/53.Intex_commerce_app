@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intex_commerce/core/app_utils/app_colors.dart';
+import 'package:intex_commerce/core/app_utils/app_text_styles.dart';
 import 'package:intex_commerce/core/app_utils/box_shadow.dart';
 import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -47,7 +48,7 @@ class TextFieldString extends StatelessWidget {
           contentPadding: const EdgeInsets.all(12.0),
 
           hintText: hint,
-          // hintStyle: AppTextStyles.size20weight400Grey,
+          hintStyle: AppTextStyles.size15weight700Grey,
 
           border: InputBorder.none,
           enabledBorder: OutlineInputBorder(
@@ -107,6 +108,7 @@ class PhoneTextField extends StatelessWidget {
           filled: true,
           fillColor: AppColors.textFieldFillColor,
           hintText: 'your_number'.tr,
+          hintStyle: AppTextStyles.size15weight700Grey,
           contentPadding: const EdgeInsets.all(12.0),
           border: InputBorder.none,
           enabledBorder: OutlineInputBorder(
