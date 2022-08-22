@@ -70,12 +70,6 @@ class HomeController extends GetxController {
   bool get isPostingConsultation => _isPostingConsultation;
   bool get isPostingOrder => _isPostingOrder;
 
-  // set isPostingConsultation(bool value){
-  //   if(_isPostingConsultation != value){
-  //     _isPostingConsultation = value;
-  //     update();
-  //   }
-  // }
 
   set displayShadow(bool value) {
     if (_displayShadow != value) {
@@ -208,7 +202,7 @@ class HomeController extends GetxController {
 
   /// Pull to refresh
   Future<void> handleRefresh() async {
-    return Get.find<SplashController>().fetchData(true).then((value) => readData());
+    return Get.find<SplashController>().fetchData().then((value) => readData());
   }
 
   /// Form price
@@ -320,7 +314,7 @@ class HomeController extends GetxController {
       if(hasInternet){
         final response = await DioService().POST(
             api: Environment.envVariable('apiCreateConsultation'),
-            body: {"name": name, "phoneNumber": phone},
+            body: {"name": name, "phoneNumber": formPhoneNumber(phone)},
         );
         await _consultationResponse(response: response, context: context);
       }else{
@@ -352,7 +346,7 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> postOrder(BuildContext context, String productId) async {
+  Future<void> postOrder(BuildContext context, int productId) async {
     String name = nameController.text.trim().toString();
     String phone = phoneController.text.trim().toString();
     String address = addressController.text.trim().toString();
@@ -369,7 +363,7 @@ class HomeController extends GetxController {
             body: {
               "productId": productId,
               "name": name,
-              "phoneNumber": phone,
+              "phoneNumber": formPhoneNumber(phone),
               "address": address,
             },
         );
@@ -429,6 +423,16 @@ class HomeController extends GetxController {
       context: ctr,
       builder: (context) => const FailDialog(),
     );
+  }
+
+  formPhoneNumber(String phone){
+    if(phone.length == 17 && phone.startsWith('+998 ')){
+      phone = phone.replaceAll('+998 ', '');
+      update();
+    }else if(phone.length == 17 && phone.startsWith('+998')){
+      phone = phone.replaceFirst('+998', '');
+    }
+    return phone;
   }
 
   /// Localization
