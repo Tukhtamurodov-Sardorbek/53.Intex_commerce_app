@@ -22,8 +22,6 @@ class AppTranslations extends Translations {
     'ru_RU': ru,
   };
 
-  static const fallbackLocale = Locale('ru', 'RU');
-
   static final langs = [
     'uz',
     'ru',

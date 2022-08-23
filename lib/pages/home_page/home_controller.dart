@@ -137,8 +137,7 @@ class HomeController extends GetxController {
     for (int i = 0; i < _categories.length; i++) {
       Log.v("${_categories[i].id}");
       _products.add({
-        _categories[i].id: productList
-            .where((element) => element.categoryId == _categories[i].id)
+        _categories[i].id: productList.where((element) => element.categoryId == _categories[i].id)
             .toList()
       });
     }
