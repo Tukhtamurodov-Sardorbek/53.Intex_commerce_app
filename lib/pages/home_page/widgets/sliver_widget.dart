@@ -1,15 +1,15 @@
+import 'package:get/get.dart';
+import 'check_icons_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:intex_commerce/core/app_utils/app_borders.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intex_commerce/core/app_utils/app_colors.dart';
 import 'package:intex_commerce/core/app_utils/app_spaces.dart';
-import 'package:intex_commerce/core/app_utils/app_text_styles.dart';
 import 'package:intex_commerce/core/app_utils/box_shadow.dart';
+import 'package:intex_commerce/core/app_utils/app_borders.dart';
+import 'package:intex_commerce/core/app_utils/app_text_styles.dart';
 import 'package:intex_commerce/pages/home_page/home_controller.dart';
 import 'package:intex_commerce/pages/home_page/widgets/dialog_widgets.dart';
 import 'package:intex_commerce/pages/home_page/widgets/label_widget.dart';
-import 'check_icons_widget.dart';
-import 'package:get/get.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SliverWidget extends StatelessWidget {
   SliverWidget({Key? key}) : super(key: key);

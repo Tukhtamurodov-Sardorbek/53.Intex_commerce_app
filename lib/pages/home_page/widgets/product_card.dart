@@ -1,15 +1,15 @@
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intex_commerce/core/app_utils/app_colors.dart';
 import 'package:intex_commerce/core/app_utils/app_spaces.dart';
 import 'package:intex_commerce/core/app_utils/box_shadow.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intex_commerce/core/app_utils/app_borders.dart';
 import 'package:intex_commerce/core/app_utils/app_text_styles.dart';
 import 'package:intex_commerce/pages/home_page/home_controller.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intex_commerce/pages/home_page/widgets/dialog_widgets.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductCard extends GetView<HomeController> {
   final int superIndex;

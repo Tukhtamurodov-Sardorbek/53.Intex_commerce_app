@@ -1,0 +1,12 @@
+export 'package:get/get.dart';
+export 'package:flutter/material.dart';
+export 'package:flutter_screenutil/flutter_screenutil.dart';
+export 'package:intex_commerce/core/app_utils/app_colors.dart';
+export 'package:intex_commerce/core/app_utils/app_text_styles.dart';
+export 'package:intex_commerce/pages/home_page/home_controller.dart';
+export 'package:intex_commerce/pages/home_page/widgets/icon_widgets.dart';
+export 'package:intex_commerce/pages/home_page/widgets/drawer_widget.dart';
+export 'package:intex_commerce/pages/home_page/widgets/footer_widget.dart';
+export 'package:intex_commerce/pages/home_page/widgets/sliver_widget.dart';
+export 'package:intex_commerce/pages/home_page/widgets/products_list.dart';
+export 'package:intex_commerce/pages/home_page/widgets/sliver_app_bar.dart';

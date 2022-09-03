@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intex_commerce/core/app_services/database_service.dart';
+import 'package:flutter/material.dart';
+import 'package:intex_commerce/data/local/database_service.dart';
 import 'ru.dart';
 import 'uz.dart';
 

@@ -4,6 +4,7 @@ import 'package:intex_commerce/core/app_utils/app_colors.dart';
 import 'package:intex_commerce/core/app_utils/app_spaces.dart';
 import 'package:intex_commerce/core/app_utils/app_text_styles.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+
 class LightLabel extends StatelessWidget {
   final String label;
   const LightLabel({Key? key, required this.label}) : super(key: key);
@@ -22,7 +23,6 @@ class LightLabel extends StatelessWidget {
     );
   }
 }
-
 
 class Label extends StatelessWidget {
   final String label;

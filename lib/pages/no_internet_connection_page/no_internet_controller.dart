@@ -1,13 +1,4 @@
-import 'package:get/get.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:intex_commerce/data/dio_client.dart';
-import 'package:intex_commerce/core/app_services/environment_service.dart';
-import 'package:intex_commerce/pages/splash_page/splash_controller.dart';
-import 'package:intex_commerce/routes/app_routes.dart';
-
-import '../../core/app_services/storage_service.dart';
-import '../../data/models/category_model.dart';
-import '../../data/models/products_model.dart';
+import 'package:intex_commerce/core/exports/no_internet_controller.dart';
 
 class NoInternetConnectionController extends GetxController {
   bool _isLoading = false;

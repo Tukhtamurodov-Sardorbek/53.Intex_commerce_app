@@ -109,37 +109,39 @@ class FooterIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(builder: (controller) {
-      return Row(
-        children: [
-          IconWidget(
-            img: 'assets/png/icons/ic_phone.png',
-            height: 29,
-            width: 29,
-            background: true,
-            onTap: () => controller.launchPhoneCall(),
-          ),
-          AppSpaces.spaceHorizontal15,
-          IconWidget(
-            img: 'assets/png/icons/ic_telegram.png',
-            height: 29,
-            width: 29,
-            background: true,
-            onTap: () => controller.launchTelegram(),
-          ),
-          AppSpaces.spaceHorizontal15,
-          IconWidget(
-            img: 'assets/png/icons/ic_instagram.png',
-            height: 29,
-            width: 29,
-            background: true,
-            onTap: () {
-              controller.launchInstagram();
-            },
-          ),
-        ],
-      );
-    },);
+    return GetBuilder<HomeController>(
+      builder: (controller) {
+        return Row(
+          children: [
+            IconWidget(
+              img: 'assets/png/icons/ic_phone.png',
+              height: 29,
+              width: 29,
+              background: true,
+              onTap: () => controller.launchPhoneCall(),
+            ),
+            AppSpaces.spaceHorizontal15,
+            IconWidget(
+              img: 'assets/png/icons/ic_telegram.png',
+              height: 29,
+              width: 29,
+              background: true,
+              onTap: () => controller.launchTelegram(),
+            ),
+            AppSpaces.spaceHorizontal15,
+            IconWidget(
+              img: 'assets/png/icons/ic_instagram.png',
+              height: 29,
+              width: 29,
+              background: true,
+              onTap: () {
+                controller.launchInstagram();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 

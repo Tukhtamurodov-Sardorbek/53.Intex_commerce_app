@@ -1,11 +1,11 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:intex_commerce/core/app_utils/app_borders.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intex_commerce/core/app_utils/app_colors.dart';
 import 'package:intex_commerce/core/app_utils/app_spaces.dart';
+import 'package:intex_commerce/core/app_utils/app_borders.dart';
 import 'package:intex_commerce/core/app_utils/app_text_styles.dart';
 import 'package:intex_commerce/pages/home_page/home_controller.dart';
-import 'package:get/get.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -44,7 +44,8 @@ class DrawerWidget extends StatelessWidget {
                             itemBuilder: (BuildContext context, int index) {
                               return DrawerButton(
                                 isTextButtonOnly: true,
-                                buttonText: controller.getCategoryName(superIndex: index),
+                                buttonText: controller.getCategoryName(
+                                    superIndex: index),
                                 appTextStyle: AppTextStyles.size17weight700,
                                 onTap: () => controller.scrollToPosition(index),
                               );

@@ -2,8 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:intex_commerce/core/app_services/environment_service.dart';
-import 'package:intex_commerce/data/exceptions.dart';
-import '../core/app_services/log_service.dart';
+import 'package:intex_commerce/core/app_services/log_service.dart';
 
 class DioService {
   /// Header
@@ -58,22 +57,6 @@ class DioService {
     }
     return null;
   }
-
-  // Future<String?> POST({required String api, required Map<String, dynamic> params}) async {
-  //   try {
-  //     Response response = await dio.post(api, data: params);
-  //     Log.i('STATUS => ${response.statusCode}');
-  //     if (response.statusCode == 200 || response.statusCode == 201) {
-  //       return jsonEncode(response.data);
-  //     }
-  //     else if(api == Environment.envVariable('apiCreateOrder') && response.statusCode == 406){
-  //       return 'not_available';
-  //     }
-  //     return null;
-  //   } on DioError catch (e) {
-  //     return e.response!.statusCode == 406 ? 'not_available' : jsonEncode(e.response!.data);
-  //   }
-  // }
 
   Future<String?> postFile({required String api, required File file}) async {
     FormData formData = FormData.fromMap(

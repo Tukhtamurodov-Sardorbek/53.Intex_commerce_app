@@ -1,12 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:intex_commerce/core/app_services/log_service.dart';
-import 'package:intex_commerce/core/app_utils/app_borders.dart';
-import 'package:intex_commerce/core/app_utils/app_colors.dart';
-import 'package:intex_commerce/core/app_utils/app_spaces.dart';
-import 'package:intex_commerce/pages/no_internet_connection_page/no_internet_controller.dart';
+import 'package:intex_commerce/core/exports/no_internet_ui.dart';
 
 class NoInternetConnectionPage extends GetView<NoInternetConnectionController> {
   const NoInternetConnectionPage({Key? key}) : super(key: key);

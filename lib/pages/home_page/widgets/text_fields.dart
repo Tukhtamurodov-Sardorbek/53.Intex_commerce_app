@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intex_commerce/core/app_utils/app_colors.dart';
-import 'package:intex_commerce/core/app_utils/app_text_styles.dart';
-import 'package:intex_commerce/core/app_utils/box_shadow.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:intex_commerce/core/app_utils/app_colors.dart';
+import 'package:intex_commerce/core/app_utils/box_shadow.dart';
+import 'package:intex_commerce/core/app_utils/app_text_styles.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 /// Text field for String type
@@ -30,10 +29,11 @@ class TextFieldString extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         boxShadow: displayShadow
-            ? isConsultDialog ? [appBoxShadowMap()] : [appBoxShadowTextField()]
+            ? isConsultDialog
+                ? [appBoxShadowMap()]
+                : [appBoxShadowTextField()]
             : null,
       ),
-
       child: TextField(
         onChanged: (String value) {},
         controller: textController,
@@ -41,15 +41,12 @@ class TextFieldString extends StatelessWidget {
         textCapitalization: TextCapitalization.sentences,
         textInputAction: next ? TextInputAction.next : TextInputAction.done,
         maxLines: 1,
-
         decoration: InputDecoration(
           filled: true,
           fillColor: AppColors.textFieldFillColor,
           contentPadding: const EdgeInsets.all(12.0),
-
           hintText: hint,
           hintStyle: AppTextStyles.size15weight700Grey,
-
           border: InputBorder.none,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -91,14 +88,13 @@ class PhoneTextField extends StatelessWidget {
     return Container(
       height: height,
       decoration: BoxDecoration(
-          boxShadow: displayShadow
-              ? isConsultDialog ? [appBoxShadowMap()] : [appBoxShadowTextField()]
-              : null,
+        boxShadow: displayShadow ? isConsultDialog
+                ? [appBoxShadowMap()]
+                : [appBoxShadowTextField()]
+            : null,
       ),
-
       child: TextField(
         inputFormatters: [maskFormatter],
-
         controller: phoneController,
         cursorColor: AppColors.main,
         keyboardType: TextInputType.phone,

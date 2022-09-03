@@ -1,19 +1,18 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:intex_commerce/core/app_services/log_service.dart';
-import 'package:intex_commerce/core/app_utils/app_spaces.dart';
-import 'package:intex_commerce/pages/home_page/widgets/icon_widgets.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intex_commerce/core/app_utils/app_spaces.dart';
 import 'package:intex_commerce/core/app_utils/box_shadow.dart';
 import 'package:intex_commerce/core/app_utils/app_colors.dart';
 import 'package:intex_commerce/core/app_utils/app_borders.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intex_commerce/core/app_utils/app_text_styles.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intex_commerce/pages/home_page/home_controller.dart';
 import 'package:intex_commerce/pages/home_page/widgets/text_fields.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:intex_commerce/pages/home_page/widgets/icon_widgets.dart';
 
 class ProductPreview extends StatelessWidget {
   final String title;
@@ -53,20 +52,19 @@ class ProductPreview extends StatelessWidget {
   }
 }
 
-
 class OrderDialog extends StatelessWidget {
   final String title;
   final String image;
   final int id;
   final String price;
 
-  const OrderDialog({
-    Key? key,
-    required this.id,
-    required this.title,
-    required this.image,
-    required this.price
-  }) : super(key: key);
+  const OrderDialog(
+      {Key? key,
+      required this.id,
+      required this.title,
+      required this.image,
+      required this.price})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +88,8 @@ class OrderDialog extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl: image,
                     fit: BoxFit.cover,
-                    imageBuilder: (BuildContext context, ImageProvider imageProvider){
+                    imageBuilder:
+                        (BuildContext context, ImageProvider imageProvider) {
                       return ProductPreview(
                         title: title,
                         child: Image(
@@ -115,14 +114,16 @@ class OrderDialog extends StatelessWidget {
                       return ProductPreview(
                         title: title,
                         child: Center(
-                          child: Image.asset('assets/png/icons/ic_no_image.png'),
+                          child:
+                              Image.asset('assets/png/icons/ic_no_image.png'),
                         ),
                       );
                     },
                   ),
                 ),
                 AppSpaces.spaceVertical30,
-                Center(child: Text(price, style: AppTextStyles.size20weight700)),
+                Center(
+                    child: Text(price, style: AppTextStyles.size20weight700)),
                 Padding(
                   padding: AppSpaces.kLTRBPadding32202713,
                   child: TextFieldString(
@@ -184,27 +185,26 @@ class OrderDialog extends StatelessWidget {
                 AppSpaces.spaceVertical24,
                 MaterialButton(
                   padding: EdgeInsets.zero,
-                  shape:
-                  RoundedRectangleBorder(borderRadius: AppBorders.circular10),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: AppBorders.circular10),
                   minWidth: 178.w,
                   height: 36.h,
                   color: AppColors.yellow,
                   onPressed: () {
-                    if(controller.isPostingOrder == false){
-                      controller.postOrder(context, id).timeout(
-                          const Duration(seconds: 5),
-                          onTimeout: (){
-                            controller.failureOnOrdering(context);
-                          }
-                      );
+                    if (controller.isPostingOrder == false) {
+                      controller
+                          .postOrder(context, id)
+                          .timeout(const Duration(seconds: 5), onTimeout: () {
+                        controller.failureOnOrdering(context);
+                      });
                     }
                   },
                   child: controller.isPostingOrder
                       ? const CupertinoActivityIndicator(color: AppColors.black)
                       : Text(
-                    'order'.tr,
-                    style: AppTextStyles.size20weight700Black,
-                  ),
+                          'order'.tr,
+                          style: AppTextStyles.size20weight700Black,
+                        ),
                 ),
               ],
             ),
@@ -283,13 +283,12 @@ class ConsultDialog extends StatelessWidget {
                         style: AppTextStyles.size20weight700Black,
                       ),
                 onPressed: () {
-                  if(controller.isPostingConsultation == false) {
-                    controller.postConsultation(context, false).timeout(
-                        const Duration(seconds: 5),
-                        onTimeout: (){
-                          controller.failureOnConsultation(context);
-                        }
-                    );
+                  if (controller.isPostingConsultation == false) {
+                    controller
+                        .postConsultation(context, false)
+                        .timeout(const Duration(seconds: 5), onTimeout: () {
+                      controller.failureOnConsultation(context);
+                    });
                   }
                 },
               ),
@@ -317,7 +316,7 @@ class SuccessDialog extends StatelessWidget {
         padding: AppSpaces.kTBPadding1725,
         child: Column(
           children: [
-            CloseIconButton(onTap: (){}),
+            CloseIconButton(onTap: () {}),
             Lottie.asset(
               'assets/lottie/success.json',
               height: 182.h,
@@ -332,7 +331,9 @@ class SuccessDialog extends StatelessWidget {
               child: Wrap(
                 children: [
                   Text(
-                    isConsult ? 'successfully_consulted'.tr : 'successfully_ordered'.tr,
+                    isConsult
+                        ? 'successfully_consulted'.tr
+                        : 'successfully_ordered'.tr,
                     textAlign: TextAlign.center,
                     style: AppTextStyles.size18weight400,
                   ),
@@ -361,7 +362,7 @@ class FailDialog extends StatelessWidget {
         padding: AppSpaces.kTBPadding1725,
         child: Column(
           children: [
-            CloseIconButton(onTap: (){}),
+            CloseIconButton(onTap: () {}),
             Lottie.asset(
               'assets/lottie/fail.json',
               height: 182.h,
@@ -398,7 +399,7 @@ class OutOfStockDialog extends StatelessWidget {
         padding: AppSpaces.kTBPadding1725,
         child: Column(
           children: [
-            CloseIconButton(onTap: (){}),
+            CloseIconButton(onTap: () {}),
             Lottie.asset(
               'assets/lottie/no_product_left.json',
               height: 182.h,
@@ -427,9 +428,7 @@ class WarningDialog extends StatelessWidget {
     return Dialog(
       backgroundColor: AppColors.white,
       insetAnimationCurve: Curves.easeOutCirc,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.r)
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
       child: SizedBox(
         height: 173.h,
         width: 257.w,
@@ -437,9 +436,14 @@ class WarningDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Lottie.asset('assets/lottie/warning.json', fit: BoxFit.contain, height: 80.h, width: 80.w),
+            Lottie.asset('assets/lottie/warning.json',
+                fit: BoxFit.contain, height: 80.h, width: 80.w),
             AppSpaces.spaceVertical20,
-            Text("warning".tr, style: AppTextStyles.size14weight400,textAlign: TextAlign.center,),
+            Text(
+              "warning".tr,
+              style: AppTextStyles.size14weight400,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),

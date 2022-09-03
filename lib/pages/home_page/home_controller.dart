@@ -1,21 +1,4 @@
-import 'dart:async';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:intex_commerce/core/app_services/database_service.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:intex_commerce/data/dio_client.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intex_commerce/data/models/info_model.dart';
-import 'package:intex_commerce/pages/home_page/home_ui.dart';
-import 'package:intex_commerce/core/app_utils/app_colors.dart';
-import 'package:intex_commerce/data/models/category_model.dart';
-import 'package:intex_commerce/data/models/products_model.dart';
-import 'package:intex_commerce/core/app_services/log_service.dart';
-import 'package:intex_commerce/pages/splash_page/splash_controller.dart';
-import 'package:intex_commerce/core/app_services/environment_service.dart';
-import 'package:intex_commerce/pages/home_page/widgets/dialog_widgets.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:intex_commerce/core/exports/home_controller.dart';
 
 class HomeController extends GetxController {
   // * Fields
