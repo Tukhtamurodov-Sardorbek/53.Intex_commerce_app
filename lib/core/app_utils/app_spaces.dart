@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppSpaces{
+  AppSpaces._();
+
   // * Paddings
   static const kAllPadding30 = EdgeInsets.all(30.0);
   static const kAllPadding17 = EdgeInsets.all(17.0);

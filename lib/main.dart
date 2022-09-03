@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intex_commerce/routes/app_pages.dart';
 import 'package:intex_commerce/routes/app_routes.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -14,13 +15,17 @@ import 'package:intex_commerce/core/app_utils/app_colors.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intex_commerce/core/app_utils/scroll_config.dart';
 import 'package:intex_commerce/translations/app_translations.dart';
-import 'package:intex_commerce/core/app_services/database_service.dart';
+import 'package:intex_commerce/core/app_services/storage_service.dart';
+
+import 'core/app_services/database_service.dart';
 
 bool checkResponsiveness = 0 != 0;
 
 void main() async {
+  // await StorageService.init();
   dotenv.load();
-  await StorageService.init();
+  await Hive.initFlutter();
+  await Hive.openBox(DatabaseService.DB_NAME);
   WidgetsFlutterBinding.ensureInitialized();
 
   // * StatusBar & NavigationBar Color
@@ -71,7 +76,7 @@ class MyApp extends StatelessWidget {
             locale: checkResponsiveness
                 ? DevicePreview.locale(context)
                 : AppTranslations.defaultLanguage(context),
-            fallbackLocale: const Locale('ru', "RU"),
+            fallbackLocale: const Locale('ru'),
             translations: AppTranslations(),
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,

@@ -11,11 +11,11 @@ class CaterogyModel {
   });
 
   String message;
-  List<Category> data;
+  List<CategoryData> data;
 
   factory CaterogyModel.fromJson(Map<String, dynamic> json) => CaterogyModel(
     message: json["message"],
-    data: List<Category>.from(json["data"].map((x) => Category.fromJson(x))),
+    data: List<CategoryData>.from(json["data"].map((x) => CategoryData.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -28,8 +28,8 @@ class CaterogyModel {
   }
 }
 
-class Category {
-  Category({
+class CategoryData {
+  CategoryData({
     required this.id,
     required this.nameRu,
     required this.nameUz,
@@ -39,7 +39,7 @@ class Category {
   String nameRu;
   String nameUz;
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
+  factory CategoryData.fromJson(Map<String, dynamic> json) => CategoryData(
     id: json["id"],
     nameRu: json["name_ru"],
     nameUz: json["name_uz"],

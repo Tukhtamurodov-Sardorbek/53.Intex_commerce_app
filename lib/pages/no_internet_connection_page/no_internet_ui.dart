@@ -66,10 +66,7 @@ class NoInternetConnectionPage extends GetView<NoInternetConnectionController> {
                     shape: RoundedRectangleBorder(
                         borderRadius: AppBorders.circular10),
                     onPressed: () {
-                      if (controller.isLoading == false) {
-                        Log.w('PRESSED');
-                        controller.onPressed();
-                      }
+                      controller.onPressed();
                     },
                     child: controller.isLoading
                         ? Theme(

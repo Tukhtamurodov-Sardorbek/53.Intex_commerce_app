@@ -1,41 +1,36 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:intex_commerce/core/app_utils/app_colors.dart';
-import 'package:intex_commerce/data/dio_client.dart';
+import 'package:flutter/material.dart';
 import 'package:intex_commerce/core/app_services/database_service.dart';
-import 'package:intex_commerce/core/app_services/environment_service.dart';
-import 'package:intex_commerce/core/app_services/log_service.dart';
-import 'package:intex_commerce/data/models/category_model.dart';
-import 'package:intex_commerce/data/models/info_model.dart';
-import 'package:intex_commerce/data/models/products_model.dart';
-import 'package:intex_commerce/pages/home_page/home_ui.dart';
-import 'package:intex_commerce/pages/home_page/widgets/dialog_widgets.dart';
-import 'package:intex_commerce/pages/splash_page/splash_controller.dart';
-import 'package:intex_commerce/translations/app_translations.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intex_commerce/data/dio_client.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intex_commerce/data/models/info_model.dart';
+import 'package:intex_commerce/pages/home_page/home_ui.dart';
+import 'package:intex_commerce/core/app_utils/app_colors.dart';
+import 'package:intex_commerce/data/models/category_model.dart';
+import 'package:intex_commerce/data/models/products_model.dart';
+import 'package:intex_commerce/core/app_services/log_service.dart';
+import 'package:intex_commerce/pages/splash_page/splash_controller.dart';
+import 'package:intex_commerce/core/app_services/environment_service.dart';
+import 'package:intex_commerce/pages/home_page/widgets/dialog_widgets.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class HomeController extends GetxController {
   // * Fields
   final scrollController = ScrollController();
-
   final footerNameController = TextEditingController();
   final footerPhoneController = TextEditingController();
-
   final consultNameController = TextEditingController();
   final consultPhoneController = TextEditingController();
-
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final addressController = TextEditingController();
 
   List<Map<int, List<Product>>> _products = [];
   DateTime _lastPressed = DateTime(0);
-  List<Category> _categories = [];
+  List<CategoryData> _categories = [];
   bool _displayShadow = false;
   late String _language;
   String _dioException = '';
@@ -49,23 +44,14 @@ class HomeController extends GetxController {
     'stylish_design',
     'high_quality',
   ];
-  Info _info = Info(
-    phoneNumber: '+998(99)535-53-33',
-    addressRu: 'Проспект Мустакиллик\n59А 100000 Узбекистан,\nТашкент',
-    addressUz: 'Mustaqillik shoh ko\'chasi\n59А 100000 O\'zbekiston,\nToshkent',
-    workTimeRu: 'Будние дни: 10:00 - 22:00\nБез выходных',
-    workTimeUz: 'Ish kunlari: 10:00 - 22:00\nDam olish kunlarisiz',
-    telegramLink: 'https://t.me/basseinintexuzb',
-    instagramLink: 'https://www.instagram.com/intexshop_uz/',
-  );
+  Info _info = Info(phoneNumber: '', addressRu: '', addressUz: '', workTimeRu: '', workTimeUz: '', telegramLink: '', instagramLink: '',);
 
   // * Getters & Setters
   List<Map<int, List<Product>>> get products => _products;
-  List<Category> get categories => _categories;
+  List<CategoryData> get categories => _categories;
   String get language => _language;
   String get dioException => _dioException;
   List<String> get textPools => _textBasseyn;
-
   bool get displayShadow => _displayShadow;
   bool get isPostingConsultation => _isPostingConsultation;
   bool get isPostingOrder => _isPostingOrder;
@@ -76,14 +62,12 @@ class HomeController extends GetxController {
       update();
     }
   }
-
   set isPostingOrder(bool value) {
     if (_isPostingOrder != value) {
       _isPostingOrder = value;
       update();
     }
   }
-
   set dioException(String msg) {
     if (_dioException != msg) {
       _dioException = msg;
@@ -93,8 +77,8 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    if (StorageService.to.checkData(StorageKeys.language)) {
-      _language = StorageService.to.getData(StorageKeys.language);
+    if (DatabaseService.checkDatabase(DatabaseKeys.language)) {
+      _language = DatabaseService.loadString(DatabaseKeys.language) ?? 'ru';
     } else {
       _language = 'ru';
     }
@@ -102,35 +86,40 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
+  // * Methods
   readData() async {
     List<Product> productList = [];
 
-    if (StorageService.to.getData(StorageKeys.info) is Info) {
-      _info = StorageService.to.getData(StorageKeys.info);
-    } else {
-      _info = Info.fromJson(StorageService.to.getData(StorageKeys.info));
-    }
+    _info = DatabaseService.loadInfo() ?? _info;
+    productList = DatabaseService.loadProducts();
+    _categories = DatabaseService.loadCategories();
 
-    if (StorageService.to.getData(StorageKeys.categoryList) is List<Category>) {
-      _categories = StorageService.to.getData(StorageKeys.categoryList);
-    } else {
-      if (StorageService.to.checkData(StorageKeys.categoryList)) {
-        _categories = List<Category>.from(StorageService.to
-            .getData(StorageKeys.categoryList)
-            .map((x) => Category.fromJson(x)));
-      }
-    }
+    // if (StorageService.to.getData(StorageKeys.info) is Info) {
+    //   _info = StorageService.to.getData(StorageKeys.info);
+    // } else {
+    //   _info = Info.fromJson(StorageService.to.getData(StorageKeys.info));
+    // }
 
-    if (StorageService.to.getData(StorageKeys.productList) is List<Product>) {
-      productList = StorageService.to.getData(StorageKeys.productList);
-    } else {
-      if (StorageService.to.checkData(StorageKeys.categoryList) &&
-          StorageService.to.checkData(StorageKeys.productList)) {
-        productList = List<Product>.from(StorageService.to
-            .getData(StorageKeys.productList)
-            .map((x) => Product.fromJson(x)));
-      }
-    }
+    // if (StorageService.to.getData(StorageKeys.categoryList) is List<Category>) {
+    //   _categories = StorageService.to.getData(StorageKeys.categoryList);
+    // } else {
+    //   if (StorageService.to.checkData(StorageKeys.categoryList)) {
+    //     _categories = List<Category>.from(StorageService.to
+    //         .getData(StorageKeys.categoryList)
+    //         .map((x) => Category.fromJson(x)));
+    //   }
+    // }
+
+    // if (StorageService.to.getData(StorageKeys.productList) is List<Product>) {
+    //   productList = StorageService.to.getData(StorageKeys.productList);
+    // } else {
+    //   if (StorageService.to.checkData(StorageKeys.categoryList) &&
+    //       StorageService.to.checkData(StorageKeys.productList)) {
+    //     productList = List<Product>.from(StorageService.to
+    //         .getData(StorageKeys.productList)
+    //         .map((x) => Product.fromJson(x)));
+    //   }
+    // }
     _products.clear();
     update();
 
@@ -148,7 +137,6 @@ class HomeController extends GetxController {
     Log.i('READ PRODUCTS $_products');
   }
 
-  // * Methods
   /// Will Pop Scope
   Future<bool> doubleTapToClose() async {
     final now = DateTime.now();
@@ -177,30 +165,15 @@ class HomeController extends GetxController {
       for (int i = 0; i < superIndex; i++) {
         productCardsHeight += _products[i][_categories[i].id]!.length * 255;
       }
-      // final pos = 565 + productCardsHeight;
-      final pos = 486 + productCardsHeight + superIndex * 80; //80
+      final pos = 486 + productCardsHeight + superIndex * 80;
       scrollController.jumpTo(pos.h);
     }
   }
-
-  bool _isDrawerOpen() {
-    bool isOpen = scaffoldKey.currentState!.isDrawerOpen;
-    return isOpen;
-  }
-
-  void openDrawer() {
-    scaffoldKey.currentState!.openDrawer();
-  }
-
-  void closeDrawer() {
-    scaffoldKey.currentState!.closeDrawer();
-  }
+  bool _isDrawerOpen() => scaffoldKey.currentState!.isDrawerOpen;
+  void openDrawer() => scaffoldKey.currentState!.openDrawer();
+  void closeDrawer() => scaffoldKey.currentState!.closeDrawer();
 
   /// Url Launcher
-  // void call() async {
-  //   const phoneNumber = '+998907997720';
-  //   const url = 'tel:$phoneNumber';
-  // }
   Future<void> _launchUrl(String url, bool isPhoneCall) async {
     if (isPhoneCall) {
       if (await canLaunch('tel:$url')) {
@@ -212,14 +185,34 @@ class HomeController extends GetxController {
       }
     }
   }
-
   Future<void> launchPhoneCall() => _launchUrl(getPhoneCall(), true);
   Future<void> launchTelegram() => _launchUrl(_info.telegramLink, false);
   Future<void> launchInstagram() => _launchUrl(_info.instagramLink, false);
 
   /// Pull to refresh
   Future<void> handleRefresh() async {
-    return Get.find<SplashController>().fetchData().then((value) => readData());
+    bool hasInternet = await InternetConnectionChecker().hasConnection;
+    if(hasInternet){
+      await _deleteCachedImages();
+      Get.forceAppUpdate();
+      Get.find<SplashController>().fetchData().then((value) => readData());
+    }
+  }
+  // Clear cache
+  Future _deleteCachedImages() async {
+    List<String> urls = [];
+    for(int superIndex = 0; superIndex < categories.length; superIndex++){
+      for(int index = 0; index < products[superIndex][categories[superIndex].id]!.length; index++){
+        urls.add(products[superIndex][categories[superIndex].id]![index].image);
+      }
+    }
+    print('URLS: $urls');
+
+    urls.map((url) async => await CachedNetworkImage.evictFromCache(url));
+    for(int i = 0; i<urls.length; i++){
+      await CachedNetworkImage.evictFromCache(urls[i]);
+    }
+    update();
   }
 
   /// Form price
@@ -239,15 +232,13 @@ class HomeController extends GetxController {
   }
 
   /// Get Data
-  String getStatus(
-      {required int superIndex, required int categoryId, required int index}) {
+  String getStatus({required int superIndex, required int categoryId, required int index}) {
     return _language == 'uz'
         ? _products[superIndex][categoryId]![index].statusUz
         : _products[superIndex][categoryId]![index].statusRu;
   }
 
-  String getProductName(
-      {required int superIndex, required int categoryId, required int index}) {
+  String getProductName({required int superIndex, required int categoryId, required int index}) {
     return _language == 'uz'
         ? _products[superIndex][categoryId]![index].frameUz
         : _products[superIndex][categoryId]![index].frameRu;
@@ -259,8 +250,7 @@ class HomeController extends GetxController {
         : _categories[superIndex].nameRu;
   }
 
-  Color getStatusColor(
-      {required int superIndex, required int categoryId, required int index}) {
+  Color getStatusColor({required int superIndex, required int categoryId, required int index}) {
     final id = _products[superIndex][categoryId]![index].statusId;
     switch (id) {
       case 1:
@@ -312,8 +302,7 @@ class HomeController extends GetxController {
   }
 
   /// Dialog
-  Future<dynamic> openDialog(
-      {required BuildContext context, required Widget child}) async {
+  Future<dynamic> openDialog({required BuildContext context, required Widget child}) async {
     return showDialog(
       context: context,
       builder: (BuildContext context) => child,
@@ -356,8 +345,7 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> _consultationResponse(
-      {required String? response, required BuildContext context}) async {
+  Future<void> _consultationResponse({required String? response, required BuildContext context}) async {
     _isPostingConsultation = false;
     update();
     if (response != null) {
@@ -412,8 +400,7 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> _orderResponse(
-      {required String? response, required BuildContext context}) async {
+  Future<void> _orderResponse({required String? response, required BuildContext context}) async {
     Log.wtf(response ?? 'NO ORDER RESPONSE');
     _isPostingOrder = false;
     update();
@@ -474,7 +461,7 @@ class HomeController extends GetxController {
   void changeLanguage() {
     _language = _language == 'uz' ? 'ru' : 'uz';
     update();
-    StorageService.to.setData(StorageKeys.language, _language);
-    AppTranslations.changeLocale(_language);
+    DatabaseService.storeString(DatabaseKeys.language, _language);
+    Get.updateLocale(Locale(_language));
   }
 }

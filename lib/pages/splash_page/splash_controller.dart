@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:intex_commerce/data/dio_client.dart';
 import 'package:intex_commerce/core/app_services/database_service.dart';
+import 'package:intex_commerce/data/dio_client.dart';
+import 'package:intex_commerce/core/app_services/storage_service.dart';
 import 'package:intex_commerce/core/app_services/environment_service.dart';
 import 'package:intex_commerce/core/app_services/log_service.dart';
 import 'package:intex_commerce/data/models/category_model.dart';
@@ -22,14 +23,14 @@ class SplashController extends GetxController {
     bool hasInternet = await InternetConnectionChecker().hasConnection;
     if (hasInternet) {
       await Future.wait([getCategoryList(), getProductList(), getInfo()]).then((value){
-        if (StorageService.to.checkData(StorageKeys.categoryList) && StorageService.to.checkData(StorageKeys.productList) && StorageService.to.checkData(StorageKeys.info)) {
+        if(DatabaseService.checkDatabase(DatabaseKeys.categoryList) && DatabaseService.checkDatabase(DatabaseKeys.productList) && DatabaseService.checkDatabase(DatabaseKeys.info)){
           Get.offNamed(AppRoutes.home);
         } else {
           Get.offNamed(AppRoutes.noInternet);
         }
       });
     } else {
-      if (StorageService.to.checkData(StorageKeys.categoryList) && StorageService.to.checkData(StorageKeys.productList) && StorageService.to.checkData(StorageKeys.info)) {
+      if(DatabaseService.checkDatabase(DatabaseKeys.categoryList) && DatabaseService.checkDatabase(DatabaseKeys.productList) && DatabaseService.checkDatabase(DatabaseKeys.info)){
         Get.offNamed(AppRoutes.home);
       } else {
         Get.offNamed(AppRoutes.noInternet);
@@ -48,7 +49,7 @@ class SplashController extends GetxController {
     if (response != null) {
       CaterogyModel category = caterogyListModelFromJson(response);
       Log.i('SAVING CATEGORY: ${category.string()}');
-      StorageService.to.setData(StorageKeys.categoryList, category.data);
+      DatabaseService.storeCategories(category.data);
     }
   }
 
@@ -63,7 +64,7 @@ class SplashController extends GetxController {
     if (response != null) {
       ProductModel product = productModelFromJson(response);
       Log.i('SAVING PRODUCTS: ${product.string()}');
-      StorageService.to.setData(StorageKeys.productList, product.data);
+      DatabaseService.storeProducts(product.data);
     }
   }
 
@@ -78,7 +79,7 @@ class SplashController extends GetxController {
     if (response != null) {
       InfoModel info = infoModelFromJson(response);
       Log.i('SAVING INFO: ${info.data.first.toString()}');
-      StorageService.to.setData(StorageKeys.info, info.data.first);
+      DatabaseService.storeInfo(info.data.first);
     }
   }
 }

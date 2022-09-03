@@ -24,25 +24,13 @@ class ProductsList extends StatelessWidget {
                 itemBuilder: (BuildContext context, int superIndex) {
                   return Column(
                     children: [
-                      Label(
-                          label: superIndex == 0
-                              ? 'season_sale'.tr
-                              : controller.getCategoryName(
-                                  superIndex: superIndex - 1)),
+                      Label(label: superIndex == 0 ? 'season_sale'.tr : controller.getCategoryName(superIndex: superIndex - 1)),
                       ListView.separated(
                         shrinkWrap: true,
                         padding: AppSpaces.kAllPadding30,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: superIndex == 0 ||
-                                controller
-                                    .products[superIndex - 1][controller
-                                        .categories[superIndex - 1].id]!
-                                    .isEmpty
-                            ? 1
-                            : controller
-                                .products[superIndex - 1]
-                                    [controller.categories[superIndex - 1].id]!
-                                .length,
+                        itemCount: superIndex == 0 || controller.products[superIndex - 1][controller.categories[superIndex - 1].id]!.isEmpty
+                            ? 1 : controller.products[superIndex - 1][controller.categories[superIndex - 1].id]!.length,
                         //controller.productDataList.length,//controller.productDataList.length,
                         separatorBuilder: (BuildContext context, int index) {
                           return AppSpaces.spaceVertical30;

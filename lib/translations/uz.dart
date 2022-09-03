@@ -2,9 +2,9 @@ final Map<String, String> uz = {
   "ru": "Русский",
   "uz": "O’zbek",
 
-  "internet_title": "Нет доступа к интернету",
-  "internet_subtitle": "Проверьте подключение к интернету",
-  "try_again": "Попробовать снова",
+  "internet_title": "Internetga ulanish mavjud emas",
+  "internet_subtitle": "Internet aloqangizni tekshiring",
+  "try_again": "Qayta urinish",
 
   'order':"Buyurtma berish",
   'free_shipping_title':"Bepul yetkazib berish",

@@ -29,10 +29,7 @@ class ProductCard extends GetView<HomeController> {
           boxShadow: [appBoxShadowCard()],
         ),
         child: CachedNetworkImage(
-          imageUrl: controller
-              .products[superIndex]
-                  [controller.categories[superIndex].id]![index]
-              .image,
+          imageUrl: controller.products[superIndex][controller.categories[superIndex].id]![index].image,
           fit: BoxFit.cover,
           imageBuilder: (BuildContext context, ImageProvider imageProvider) {
             return ProductCardUi(

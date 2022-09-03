@@ -2,9 +2,9 @@ final Map<String, String> ru = {
   "ru": "Русский",
   "uz": "O’zbek",
 
-  "internet_title": "Internetga ulanish mavjud emas",
-  "internet_subtitle": "Internet aloqangizni tekshiring",
-  "try_again": "Qayta urinish",
+  "internet_title": "Нет доступа к интернету",
+  "internet_subtitle": "Проверьте подключение к интернету",
+  "try_again": "Попробовать снова",
 
   "order": "Заказать",
   "free_shipping": "Бесплатная доставка осуществляется в пределах города Ташкент (за пределами города доставка оплачивается отдельно)",
